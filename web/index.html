@@ -1,0 +1,1112 @@
+<title>未来面试间</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen&family=ZCOOL+QingKe+HuangYou&display=swap">
+<style>
+/* Layout: one working screen. The pixel stage leads, the casting desk sits under it, and a log rail runs down the right; everything stacks on phones. */
+:root{
+  --bg:#E9EDF2; --panel:#FFFFFF; --sunk:#F3F5F8; --ink:#1A2232; --muted:#566074; --line:#D3D9E2;
+  --pen:#2B57CF; --pen-ink:#FFFFFF; --folder:#E4BA55; --folder-ink:#3A2C08;
+  --glow:#0E97AB; --good:#24864E; --bad:#C23B4B;
+  --hr:#8447BD; --biz:#2B57CF; --cand:#B4600F; --narr:#566074;
+  --paper:#FFFDF7; --paper-ink:#1A2232; --paper-edge:#1A2232; --ai-paper:#E6FAFD; --ai-edge:#0B8597;
+  --display:"ZCOOL QingKe HuangYou","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --pixel:"Silkscreen",ui-monospace,Menlo,Consolas,monospace;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F141D; --panel:#171E2B; --sunk:#121824; --ink:#E6EBF3; --muted:#9AA5B8; --line:#283246;
+  --pen:#7C9DFF; --pen-ink:#0E1424; --folder:#E4BA55; --folder-ink:#2A1F05;
+  --glow:#3ED3E8; --good:#55C485; --bad:#F06A7A;
+  --hr:#C49AF0; --biz:#8EAEFF; --cand:#F0A55C; --narr:#9AA5B8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F141D; --panel:#171E2B; --sunk:#121824; --ink:#E6EBF3; --muted:#9AA5B8; --line:#283246;
+  --pen:#7C9DFF; --pen-ink:#0E1424; --folder:#E4BA55; --folder-ink:#2A1F05;
+  --glow:#3ED3E8; --good:#55C485; --bad:#F06A7A;
+  --hr:#C49AF0; --biz:#8EAEFF; --cand:#F0A55C; --narr:#9AA5B8; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 40px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--pen);outline-offset:2px}
+.top{max-width:1380px;margin:0 auto 14px;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:flex-end;justify-content:space-between}
+.brand{min-width:0}
+.brand h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,3.4vw,40px);line-height:1.05;letter-spacing:.05em;margin:0;text-wrap:balance}
+.brand h1 small{font-family:var(--pixel);font-size:.36em;letter-spacing:.08em;color:var(--pen);vertical-align:.55em;margin-left:.5em}
+.brand p{margin:6px 0 0;color:var(--muted);max-width:62ch}
+.mode{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:2px;gap:2px}
+.seg button{border:0;background:transparent;padding:6px 12px;border-radius:6px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--pen);color:var(--pen-ink)}
+.seg button:disabled{opacity:.45;cursor:not-allowed}
+.mode .hint{font-size:12px;color:var(--muted);text-align:right;max-width:42ch}
+.app{max-width:1380px;margin:0 auto;display:grid;gap:16px;align-items:start;
+  grid-template-columns:minmax(0,1fr) minmax(300px,370px);grid-template-areas:"theater rail" "casting rail"}
+.theater{grid-area:theater;min-width:0;display:flex;flex-direction:column;gap:10px}
+.rail{grid-area:rail;min-width:0;position:sticky;top:max(12px,env(safe-area-inset-top,0px))}
+.casting{grid-area:casting;min-width:0}
+@media (max-width:1000px){.app{grid-template-columns:minmax(0,1fr);grid-template-areas:"theater" "rail" "casting"}.rail{position:static}}
+
+/* stage */
+.stage-wrap{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#1A2030;
+  box-shadow:0 0 0 1px var(--line),0 10px 30px -18px rgba(10,20,40,.55);container-type:inline-size;container-name:stage}
+#stage{display:block;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+.overlay{position:absolute;inset:0;pointer-events:none;font-size:clamp(10px,1.72cqw,15px);font-family:var(--body)}
+.bubble{position:absolute;max-width:44%;width:max-content;background:var(--paper);color:var(--paper-ink);border:2px solid var(--paper-edge);
+  border-radius:6px;padding:.32em .62em;line-height:1.45;box-shadow:3px 3px 0 rgba(20,28,44,.35);transform:translate(var(--tx,-20%),calc(-100% - 6px));
+  opacity:0;transition:opacity .12s}
+.bubble.on{opacity:1}
+.bubble::after{content:"";position:absolute;bottom:-7px;left:var(--tail,20%);width:10px;height:10px;background:var(--paper);border-right:2px solid var(--paper-edge);border-bottom:2px solid var(--paper-edge);transform:rotate(45deg) translateX(-50%);}
+.bubble .who{display:block;font-size:.78em;font-weight:700;letter-spacing:.04em;opacity:.7}
+.bubble.ai{background:var(--ai-paper);border-color:var(--ai-edge);font-family:var(--mono);font-size:.86em}
+.bubble.ai::after{background:var(--ai-paper);border-color:var(--ai-edge)}
+.bubble.below{transform:translate(var(--tx,-50%),8px)}
+.bubble.below::after{bottom:auto;top:-7px;transform:rotate(225deg) translateX(50%)}
+.bubble.ai .who{color:var(--ai-edge);opacity:1}
+.bubble.thought{border-style:dashed;border-radius:14px}
+.bubble.thought::after{border-radius:50%;width:8px;height:8px;bottom:-12px;border:2px dashed var(--paper-edge)}
+.bubble .score{font-family:var(--pixel);font-size:1em;margin-left:.4em}
+.caption{position:absolute;left:50%;top:3.5%;transform:translateX(-50%);max-width:78%;width:max-content;background:rgba(14,18,28,.86);color:#F4F0E4;
+  padding:.35em .9em;border-radius:4px;font-size:.95em;line-height:1.45;opacity:0;transition:opacity .2s;text-align:center}
+.caption.on{opacity:1}
+.caption b{color:#F2C55C;font-weight:700;margin-right:.4em}
+.wb{position:absolute;left:68.1%;top:8.9%;width:25%;height:22.2%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:.1em;text-align:center;color:#22314C;line-height:1.2}
+.wb .code{font-family:var(--pixel);font-size:1.15em;color:#2B57CF}
+.wb .name{font-weight:700;font-size:.9em}
+.wb .step{font-size:.72em;color:#4A5873}
+.poster{position:absolute;left:9.4%;top:12.2%;width:15%;height:16.7%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#FFF7E0;font-size:.7em;line-height:1.15;text-align:center}
+.poster b{font-family:var(--pixel);font-size:1.25em;color:#FFE08A}
+.skip{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:2.4em;color:#FFF3D6;
+  text-shadow:0 2px 0 rgba(0,0,0,.4);background:rgba(10,14,24,.35);opacity:0;transition:opacity .25s}
+.skip.on{opacity:1}
+.hire{position:absolute;left:50%;top:36%;transform:translate(-50%,-50%);pointer-events:auto;background:var(--paper);color:var(--paper-ink);border:3px solid var(--paper-edge);
+  border-radius:8px;padding:.8em 1.1em;box-shadow:5px 5px 0 rgba(20,28,44,.4);display:flex;gap:.9em;align-items:center;max-width:78%}
+.hire canvas{width:4.2em;height:auto;image-rendering:pixelated;flex:none}
+.hire .stamp{font-family:var(--display);font-size:1.6em;color:#C23B4B;line-height:1}
+.hire .nm{font-weight:700;font-size:1.15em}
+.hire .rs{font-size:.85em;color:#4A5873;margin-top:.2em}
+.start-hint{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);pointer-events:auto;font-size:1em}
+.start-hint button{background:var(--paper);color:var(--paper-ink);border:2px solid var(--paper-edge);border-radius:6px;padding:.45em 1em;box-shadow:3px 3px 0 rgba(20,28,44,.4);font-weight:700}
+.vn{display:none;gap:10px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:76px}
+.vn canvas{width:40px;height:auto;aspect-ratio:16/22;image-rendering:pixelated;flex:none;background:var(--sunk);border-radius:6px}
+.vn .t{min-width:0}
+.vn .n{font-weight:700;font-size:13px}
+.vn .x{margin-top:2px}
+.vn.ai .x{font-family:var(--mono);color:var(--glow)}
+.vn.narr .x{font-style:italic;color:var(--muted)}
+@media (max-width:640px){.overlay .bubble,.overlay .caption{display:none}.vn{display:flex}}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:7px 14px;display:inline-flex;align-items:center;gap:6px}
+.btn:hover:not(:disabled){border-color:var(--pen)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.primary{background:var(--pen);border-color:var(--pen);color:var(--pen-ink);font-weight:700}
+.btn.small{padding:4px 10px;font-size:13px}
+.ctl-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ctl-group label{font-size:12px;color:var(--muted)}
+.seed{width:6.5em;border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 8px;font-variant-numeric:tabular-nums}
+.status{font-size:13px;color:var(--muted);margin-left:auto;min-width:0}
+.status.warn{color:var(--bad)}
+
+/* rail */
+.rail{background:var(--panel);border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;max-height:calc(100vh - 32px);min-height:420px}
+@media (max-width:1000px){.rail{max-height:none}}
+.tabs{display:flex;border-bottom:1px solid var(--line);padding:0 6px}
+.tabs button{border:0;background:none;padding:10px 12px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--pen);font-weight:700}
+.pane{overflow:auto;padding:12px 14px;flex:1;min-height:0}
+.pane[hidden]{display:none}
+.log{display:flex;flex-direction:column;gap:6px;font-size:13px}
+.log .sec{margin-top:8px;font-family:var(--pixel);font-size:11px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;display:flex;gap:8px;align-items:center}
+.log .sec::after{content:"";flex:1;height:1px;background:var(--line)}
+.log .stg{font-size:12px;color:var(--muted);margin-top:4px}
+.log .ln b{font-weight:700;margin-right:.35em}
+.log .ln.hr b{color:var(--hr)} .log .ln.biz b{color:var(--biz)} .log .ln.cand b{color:var(--cand)}
+.log .ln.ai{font-family:var(--mono);font-size:12px;color:var(--glow);border-left:2px solid var(--glow);padding-left:8px}
+.log .ln.narr{font-style:italic;color:var(--narr)}
+.log .ln.judge{background:var(--sunk);border-radius:8px;padding:6px 8px}
+.empty{color:var(--muted);font-size:13px}
+.aud{display:flex;flex-direction:column;gap:10px}
+.acard{border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.acard.hired{border-color:var(--folder);box-shadow:inset 0 0 0 1px var(--folder)}
+.acard .hd{display:flex;gap:8px;align-items:center}
+.acard .hd canvas{width:30px;height:auto;aspect-ratio:16/22;image-rendering:pixelated;background:var(--sunk);border-radius:5px}
+.acard .hd .nm{font-weight:700}
+.acard .hd .tag{font-size:11px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font-size:11px;border-radius:999px;padding:1px 8px;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.chip.ai{border-color:var(--glow);color:var(--glow)}
+.chip.good{border-color:var(--good);color:var(--good)}
+.chip.bad{border-color:var(--bad);color:var(--bad)}
+.chip.hire{background:var(--folder);border-color:var(--folder);color:var(--folder-ink);font-weight:700}
+.scores{display:flex;gap:10px;font-size:12px;color:var(--muted)}
+.scores b{font-family:var(--pixel);font-size:13px;color:var(--ink);font-weight:400}
+.bars{display:grid;grid-template-columns:auto minmax(0,1fr) 2.2em;gap:2px 8px;align-items:center;font-size:11px;color:var(--muted)}
+.bar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--pen)}
+.bar.ai i{background:var(--glow)} .bar.ex i{background:var(--cand)} .bar.ho i{background:var(--good)} .bar.ne i{background:var(--bad)}
+.bars .v{font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
+table.mx{border-collapse:collapse;width:100%;font-size:12px}
+.mx th,.mx td{border:1px solid var(--line);padding:5px 4px;text-align:center;font-variant-numeric:tabular-nums}
+.mx th:first-child,.mx td:first-child{text-align:left}
+.mx td.hot{background:color-mix(in srgb,var(--folder) 35%,transparent)}
+.tablebox{overflow-x:auto}
+.runs{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:12px}
+.run{border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.run .meta{color:var(--muted)}
+.note{font-size:12px;color:var(--muted);margin:10px 0 0}
+.confirm{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px}
+
+/* casting */
+.casting{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:16px}
+.casting h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0;letter-spacing:.04em}
+.casting h3{font-size:13px;margin:0;color:var(--muted);font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.casting h3 span{font-family:var(--pixel);font-size:11px;letter-spacing:.06em}
+.crow{display:flex;flex-direction:column;gap:8px}
+.job{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.job input{flex:1;min-width:0;border:1px solid var(--line);background:var(--sunk);border-radius:8px;padding:7px 10px}
+.grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.card{position:relative;text-align:left;border:1px solid var(--line);background:var(--sunk);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.card.on{border-color:var(--pen);background:color-mix(in srgb,var(--pen) 7%,var(--panel));box-shadow:inset 0 0 0 1px var(--pen)}
+.card .row{display:flex;gap:8px;align-items:center;min-width:0}
+.card canvas{width:30px;height:auto;aspect-ratio:16/22;image-rendering:pixelated;flex:none;background:var(--panel);border-radius:5px}
+.card .nm{font-weight:700;line-height:1.25}
+.card .tg{font-size:11px;color:var(--muted)}
+.card .ds{font-size:12px;color:var(--muted);line-height:1.45}
+.card .code{font-family:var(--pixel);font-size:18px;color:var(--pen);line-height:1;width:1.4em}
+.card .edit{position:absolute;top:6px;right:6px;border:0;background:none;color:var(--muted);font-size:12px;padding:2px 4px}
+.card .edit:hover{color:var(--pen)}
+.card.add{align-items:center;justify-content:center;border-style:dashed;color:var(--pen);min-height:88px;font-weight:700;background:transparent}
+.seats{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.seat{border:1px solid var(--line);background:var(--sunk);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.seat select{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:5px 6px;max-width:100%}
+.seat .rowx{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.att{font-size:11px;color:var(--muted)}
+
+/* editor */
+.editor{position:fixed;inset:0;z-index:30;background:rgba(10,14,22,.5);display:flex;align-items:flex-start;justify-content:center;overflow:auto;
+  padding:max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px))}
+.ed{background:var(--panel);border:1px solid var(--line);border-radius:12px;width:min(640px,100%);padding:16px;display:flex;flex-direction:column;gap:12px}
+.ed h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0}
+.ed .gen{display:flex;flex-direction:column;gap:6px;background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:10px}
+.ed textarea,.ed input[type=text],.ed select{width:100%;border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:7px 9px}
+.ed textarea{min-height:64px;resize:vertical}
+.ed .f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ed .f label{font-size:12px;color:var(--muted)}
+.ed .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.ed .sl{display:grid;grid-template-columns:5.5em minmax(0,1fr) 2.4em;gap:8px;align-items:center;font-size:12px}
+.ed .sl output{font-variant-numeric:tabular-nums;text-align:right}
+.ed .acts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.ed .err{color:var(--bad);font-size:12px;min-height:1em}
+.stagelist{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.stagelist .chip{display:inline-flex;gap:4px;align-items:center;font-size:12px;padding:2px 4px 2px 9px}
+.stagelist .chip button{border:0;background:none;color:var(--muted);padding:0 4px}
+.ed .preview{display:flex;gap:10px;align-items:center}
+.ed .preview canvas{width:48px;height:60px;image-rendering:pixelated;background:var(--sunk);border-radius:6px}
+.card .pick{background:none;border:0;padding:0;text-align:left;display:flex;flex-direction:column;gap:6px;color:inherit;width:100%;min-width:0}
+.card .pick:focus-visible{outline:2px solid var(--pen);outline-offset:4px;border-radius:6px}
+.seat canvas{width:30px;height:auto;aspect-ratio:16/22;image-rendering:pixelated;background:var(--panel);border-radius:5px;flex:none}
+.seat .nm{font-weight:700}
+.seat .ds{font-size:12px;color:var(--muted)}
+.seat .who{min-width:0}
+.seat .hd{justify-content:space-between}
+[inert]{opacity:.55}
+.hire .x{position:absolute;top:2px;right:6px;border:0;background:none;color:#4A5873;font-size:1.1em;padding:2px 4px}
+.bx{display:flex;flex-direction:column;gap:8px;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+.bx h4{margin:0;font-size:14px}
+.bx .rowx{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bx select{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:4px 6px}
+.prog{height:6px;border-radius:3px;background:var(--sunk);border:1px solid var(--line);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--glow);transition:width .3s}
+.mx small{display:block;color:var(--muted);font-size:10.5px;line-height:1.3}
+@media (prefers-reduced-motion: reduce){.bubble,.caption,.skip{transition:none}}
+</style>
+
+<header class="top">
+  <div class="brand">
+    <h1>未来面试间<small>FALL 2030</small></h1>
+    <p>2030 年秋招的一间面试室。选好候选人、面试官和面试方式，按下开始，看谁会被录用。你能看到面试官看不到的东西：谁用了 AI，谁没发现陷阱，谁在隐瞒。</p>
+  </div>
+  <div class="mode">
+    <div class="seg" role="group" aria-label="台词来源">
+      <button id="modeLive" type="button" aria-pressed="false" disabled>Claude 生成</button>
+      <button id="modeDemo" type="button" aria-pressed="true">演示模式</button>
+    </div>
+    <div class="hint" id="modeHint">正在连接 Claude…</div>
+  </div>
+</header>
+
+<main class="app">
+  <section class="theater" aria-label="面试现场">
+    <div class="stage-wrap" id="stageWrap">
+      <canvas id="stage" width="320" height="180" aria-label="像素风面试室：左边是候场走廊，右边是面试间"></canvas>
+      <div class="overlay" id="overlay">
+        <div class="poster" aria-hidden="true"><b>2030</b>秋季招聘<br>数据岗</div>
+        <div class="wb" id="wb"><span class="code" id="wbCode">B</span><span class="name" id="wbName">开卷实战</span><span class="step" id="wbStep">等待开始</span></div>
+        <div class="caption" id="caption"></div>
+        <div class="skip" id="skip">十五分钟后</div>
+        <div class="start-hint" id="startHint"><button type="button" id="startHintBtn">开始面试</button></div>
+      </div>
+    </div>
+    <div class="vn" id="vn" aria-live="polite"><canvas id="vnFace" width="16" height="22"></canvas><div class="t"><div class="n" id="vnName">旁白</div><div class="x" id="vnText">按“开始面试”，第一位候选人会从走廊走进来。</div></div></div>
+    <div class="controls">
+      <button class="btn primary" id="btnStart" type="button">开始面试</button>
+      <button class="btn" id="btnPause" type="button" disabled>暂停</button>
+      <button class="btn" id="btnStop" type="button" disabled>停止</button>
+      <div class="ctl-group">
+        <label for="speed">速度</label>
+        <div class="seg" id="speed" role="group" aria-label="播放速度">
+          <button type="button" data-speed="1" aria-pressed="true">1×</button>
+          <button type="button" data-speed="2" aria-pressed="false">2×</button>
+          <button type="button" data-speed="4" aria-pressed="false">4×</button>
+          <button type="button" data-speed="12" aria-pressed="false">只看结果</button>
+        </div>
+      </div>
+      <div class="ctl-group">
+        <label for="seed">随机种子</label>
+        <input class="seed" id="seed" type="number" inputmode="numeric" value="2030">
+        <button class="btn small" id="btnDice" type="button">换一个</button>
+      </div>
+      <div class="status" id="status" role="status"></div>
+    </div>
+  </section>
+
+  <aside class="rail" aria-label="记录与结果">
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tabLog" aria-selected="true" aria-controls="paneLog" type="button">面试记录</button>
+      <button role="tab" id="tabAud" aria-selected="false" aria-controls="paneAud" type="button">台下视角</button>
+      <button role="tab" id="tabRes" aria-selected="false" aria-controls="paneRes" type="button">录用统计</button>
+    </div>
+    <div class="pane" id="paneLog" role="tabpanel" aria-labelledby="tabLog"><div class="log" id="log"><p class="empty">面试开始后，每一句对话都会记在这里。</p></div></div>
+    <div class="pane" id="paneAud" role="tabpanel" aria-labelledby="tabAud" hidden><div class="aud" id="aud"></div></div>
+    <div class="pane" id="paneRes" role="tabpanel" aria-labelledby="tabRes" hidden><div id="res"></div></div>
+  </aside>
+
+  <section class="casting" aria-label="选角台">
+    <h2>选角台</h2>
+    <div class="crow">
+      <h3>招聘岗位</h3>
+      <div class="job"><input id="job" type="text" maxlength="60" aria-label="招聘岗位"><button class="btn small" id="jobReset" type="button">恢复默认</button></div>
+    </div>
+    <div class="crow">
+      <h3>面试方式 <span>PICK ONE</span></h3>
+      <div class="grid" id="fmtGrid"></div>
+    </div>
+    <div class="crow">
+      <h3>面试官 <span>2 SEATS</span></h3>
+      <div class="seats" id="seats"></div>
+    </div>
+    <div class="crow">
+      <h3>候选人 <span>UP TO 5</span></h3>
+      <div class="grid" id="candGrid"></div>
+    </div>
+  </section>
+</main>
+
+<div class="editor" id="editor" hidden><div class="ed" id="ed" role="dialog" aria-modal="true" aria-labelledby="edTitle"></div></div>
+<script>
+(()=>{
+'use strict';
+/* ---------- utilities ---------- */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const W=320,H=180;
+const reduced=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch{return false}})();
+const clamp=(v,a=0,b=100)=>Math.max(a,Math.min(b,v));
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function hashStr(s){let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h;}
+function rng(seed){let a=seed>>>0;return()=>{a=(a+0x6D2B79F5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
+const sig=x=>1/(1+Math.exp(-x));
+const uid=p=>p+'-'+Math.random().toString(36).slice(2,9);
+const num=(v,d)=>{v=Number(v);return Number.isFinite(v)?Math.round(clamp(v)):d;};
+const str=(v,max,d='')=>{v=(v==null?'':String(v)).replace(/\s+/g,' ').trim();return (v||d).slice(0,max);};
+function shade(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=(n>>8)&255,b=n&255;const f=amt<0?0:255,t=Math.abs(amt);r=Math.round(r+(f-r)*t);g=Math.round(g+(f-g)*t);b=Math.round(b+(f-b)*t);return '#'+((1<<24)|(r<<16)|(g<<8)|b).toString(16).slice(1);}
+class Stop extends Error{}
+
+/* ---------- preset cast ---------- */
+const SKIN=['#F3D5B5','#E2B48C','#C68A62','#8E5B3D'];
+const SKIN_LABEL=['浅','中浅','中深','深'];
+const HAIR={black:'#25212B',brown:'#6A432F',blond:'#D8B25A',red:'#A3412D',gray:'#9C9CA8',blue:'#3D5AA6'};
+const HAIR_LABEL={black:'黑',brown:'棕',blond:'金',red:'红',gray:'灰',blue:'蓝'};
+const STYLES=['short','long','bun','curly','buzz'];
+const STYLE_LABEL={short:'短发',long:'长发',bun:'丸子头',curly:'卷发',buzz:'寸头'};
+const DEFAULT_JOB='初级数据分析师，一家电商公司';
+const PRESET_CANDS=[
+  {id:'c-knowledge',name:'林知远',arche:'知识型',tagline:'成绩全 A 的统计学硕士',bio:'统计学硕士，专业课几乎全 A，很少用 AI，觉得自己想清楚才踏实。',ab:{knowledge:88,ai:25,expression:52,honesty:85,nerves:58},look:{skin:0,hair:'black',style:'short',shirt:'#2F4A7A',pants:'#2B2F3A',glasses:true}},
+  {id:'c-ai',name:'周小满',arche:'AI 型',tagline:'用 AI 做过十几个项目',bio:'市场营销专业，专业课一般，但用 AI 做过十几个数据项目，作品集很漂亮。',ab:{knowledge:38,ai:92,expression:62,honesty:45,nerves:28},look:{skin:1,hair:'brown',style:'bun',shirt:'#E07A2F',pants:'#3B3F4C',glasses:false}},
+  {id:'c-both',name:'陈一舟',arche:'结合型',tagline:'计算机加经济双学位',bio:'计算机和经济双学位，基础扎实，也习惯先让 AI 打草稿，再自己核对。',ab:{knowledge:80,ai:82,expression:56,honesty:78,nerves:40},look:{skin:2,hair:'black',style:'curly',shirt:'#3E8E63',pants:'#2E3340',glasses:false}},
+  {id:'c-talk',name:'许乐乐',arche:'表达型',tagline:'演讲比赛冠军',bio:'学生会主席，演讲比赛冠军，专业和 AI 都算中等，很会讲故事。',ab:{knowledge:55,ai:55,expression:93,honesty:60,nerves:14},look:{skin:0,hair:'red',style:'long',shirt:'#B8344A',pants:'#2A2E38',glasses:false}},
+];
+const PRESET_INTS=[
+  {id:'i-hr',role:'hr',name:'王蕾',title:'HR 经理',tagline:'做了 12 年招聘',persona:'说话亲切、节奏快，喜欢问经历和动机，不懂技术细节。',values:'能把事办成、沟通顺畅、有团队意识',aiAtt:1,look:{skin:1,hair:'black',style:'long',shirt:'#7B4FB0',pants:'#2A2E38',glasses:false}},
+  {id:'i-biz',role:'biz',name:'赵志强',title:'数据团队负责人',tagline:'带了 8 年数据团队',persona:'话不多，喜欢追问细节，最怕“看起来对、其实错”的结论。',values:'真懂原理、能判断结论对不对',aiAtt:0,look:{skin:2,hair:'gray',style:'buzz',shirt:'#3A4E6E',pants:'#2B2F3A',glasses:true}},
+];
+const STAGE_TYPES={
+  intro:{label:'自我介绍',by:'hr'},
+  knowledge:{label:'专业问答',by:'biz'},
+  task:{label:'实战任务',by:'biz'},
+  trap:{label:'陷阱任务',by:'biz'},
+  followup:{label:'追问',by:'biz'},
+  behavior:{label:'经历问答',by:'hr'},
+  disclosure:{label:'问是否用了 AI',by:'hr'},
+  closing:{label:'反问环节',by:'hr'},
+};
+const PRESET_FMTS=[
+  {id:'f-a',code:'A',name:'传统面试',desc:'只问专业问题，不许用 AI。',ai:false,stages:['intro','knowledge','knowledge','behavior','closing']},
+  {id:'f-b',code:'B',name:'开卷实战',desc:'给一个真实工作任务，允许用 AI，限时完成。',ai:true,stages:['intro','task','behavior','disclosure','closing']},
+  {id:'f-c',code:'C',name:'开卷加追问',desc:'允许用 AI 完成任务，然后追问为什么这样做、条件变了怎么办。',ai:true,stages:['intro','task','followup','followup','disclosure','closing']},
+  {id:'f-d',code:'D',name:'陷阱任务',desc:'材料里埋了一个 AI 容易忽略、看起来却很对的问题。',ai:true,stages:['intro','trap','followup','behavior','closing']},
+];
+const ATT={'-2':'非常反感候选人依赖 AI','-1':'对依赖 AI 有些警惕','0':'对 AI 中立，只看结果','1':'欣赏会用 AI 提效的人','2':'非常看重 AI 能力'};
+
+/* ---------- normalizers (used for saved items and Claude-designed ones) ---------- */
+const HEX=/^#[0-9a-f]{6}$/i;
+function normLook(l){l=l||{};return{skin:clamp(Math.round(Number(l.skin)||0),0,3),hair:HAIR[l.hair]?l.hair:'black',style:STYLES.includes(l.style)?l.style:'short',shirt:HEX.test(l.shirt)?l.shirt:'#4A6FA5',pants:HEX.test(l.pants)?l.pants:'#2B2F3A',glasses:l.glasses===true||l.glasses==='true'};}
+function normCand(o){o=o||{};const ab=o.ab||o;return{id:typeof o.id==='string'&&o.id.startsWith('cc-')?o.id:uid('cc'),custom:true,name:str(o.name,8,'新候选人'),arche:str(o.arche,6,'自定义'),tagline:str(o.tagline,20,''),bio:str(o.bio,80,''),
+  ab:{knowledge:num(ab.knowledge,50),ai:num(ab.ai,50),expression:num(ab.expression,50),honesty:num(ab.honesty,60),nerves:num(ab.nerves,40)},look:normLook(o.look||o)};}
+function normInt(o){o=o||{};return{id:typeof o.id==='string'&&o.id.startsWith('ci-')?o.id:uid('ci'),custom:true,role:o.role==='biz'?'biz':'hr',name:str(o.name,8,'新面试官'),title:str(o.title,12,o.role==='biz'?'业务面试官':'HR'),tagline:str(o.tagline,20,''),
+  persona:str(o.persona,80,''),values:str(o.values,40,''),aiAtt:clamp(Math.round(Number(o.aiAtt)||0),-2,2),look:normLook(o.look||o)};}
+function normFmt(o){o=o||{};let stages=(Array.isArray(o.stages)?o.stages:[]).map(String).filter(s=>STAGE_TYPES[s]).slice(0,8);if(!stages.length)stages=['intro','task','closing'];
+  const code=str(o.code,1,'X').toUpperCase().replace(/[^A-Z]/g,'')||'X';
+  return{id:typeof o.id==='string'&&o.id.startsWith('cf-')?o.id:uid('cf'),custom:true,code,name:str(o.name,10,'自定义面试'),desc:str(o.desc,60,''),ai:o.ai===true||o.ai==='true',stages};}
+
+/* ---------- per-viewer storage ---------- */
+const KEY='future-interview-room-v1';
+const store={customs:{cand:[],int:[],fmt:[]},sel:{},results:[]};
+try{const raw=JSON.parse(localStorage.getItem(KEY)||'null');
+  if(raw&&typeof raw==='object'){
+    store.customs.cand=(raw.customs&&Array.isArray(raw.customs.cand)?raw.customs.cand:[]).map(normCand);
+    store.customs.int=(raw.customs&&Array.isArray(raw.customs.int)?raw.customs.int:[]).map(normInt);
+    store.customs.fmt=(raw.customs&&Array.isArray(raw.customs.fmt)?raw.customs.fmt:[]).map(normFmt);
+    store.sel=raw.sel&&typeof raw.sel==='object'?raw.sel:{};
+    store.results=Array.isArray(raw.results)?raw.results.slice(-200):[];
+  }}catch{}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch{}}
+const allCands=()=>PRESET_CANDS.concat(store.customs.cand);
+const allInts=()=>PRESET_INTS.concat(store.customs.int);
+const allFmts=()=>PRESET_FMTS.concat(store.customs.fmt);
+const byId=(list,id)=>list.find(x=>x.id===id);
+const sel={cands:Array.isArray(store.sel.cands)?store.sel.cands.slice(0,5):PRESET_CANDS.map(c=>c.id),fmt:store.sel.fmt||'f-b',hr:store.sel.hr||'i-hr',biz:store.sel.biz||'i-biz',job:typeof store.sel.job==='string'&&store.sel.job.trim()?store.sel.job:DEFAULT_JOB};
+function validSel(){
+  sel.cands=sel.cands.filter(id=>byId(allCands(),id)).slice(0,5);if(!sel.cands.length)sel.cands=[PRESET_CANDS[0].id];
+  if(!byId(allFmts(),sel.fmt))sel.fmt='f-b';
+  const hr=byId(allInts(),sel.hr);if(!hr||hr.role!=='hr')sel.hr='i-hr';
+  const bz=byId(allInts(),sel.biz);if(!bz||bz.role!=='biz')sel.biz='i-biz';
+}
+function saveSel(){store.sel={cands:sel.cands.slice(),fmt:sel.fmt,hr:sel.hr,biz:sel.biz,job:sel.job};save();}
+
+/* ---------- app state ---------- */
+const state={mode:'demo',sample:null,claudeKnown:false,running:false,paused:false,token:0,speed:1,ctls:new Set(),scripts:new Set(),fellBack:false};
+const live=()=>state.mode==='live'&&!!state.sample;
+const speedMul=()=>state.speed;
+
+/* ---------- the mechanism: code decides how well each step goes ---------- */
+function levelOf(q){
+  if(q>=80)return{key:'top',tier:'hi',label:'出色',hint:'答得清楚具体，有自己的见解'};
+  if(q>=65)return{key:'good',tier:'hi',label:'良好',hint:'基本正确，细节略少'};
+  if(q>=50)return{key:'mid',tier:'mid',label:'一般',hint:'方向对，但讲不清细节'};
+  if(q>=35)return{key:'weak',tier:'lo',label:'较弱',hint:'有明显漏洞，被问住时含糊其辞'};
+  return{key:'poor',tier:'lo',label:'很差',hint:'答不上来，或者答错'};
+}
+function planInterview(c,fmt,seed){
+  const r=rng(hashStr(seed+'|'+c.id+'|'+c.name+'|'+fmt.id));
+  const {knowledge:K,ai:A,expression:E,honesty:Hn,nerves:N}=c.ab;
+  const nerv=-0.12*(N-30), jitter=a=>(r()*2-1)*a;
+  const plan={cand:c,fmt,stages:[],usedAI:false,trapFound:null,concealed:false};
+  let kq=0,fq=0;
+  fmt.stages.forEach((type,idx)=>{
+    const T=STAGE_TYPES[type];const st={i:idx+1,type,label:T.label,by:T.by,usedAI:false};let q=50;
+    if(type==='intro')q=0.55*E+0.2*K+0.25*(100-N)+jitter(6);
+    else if(type==='knowledge'){st.n=kq++;q=0.8*K+0.2*E+nerv+jitter(8);}
+    else if(type==='task'||type==='trap'){
+      const use=fmt.ai&&(A>=45||r()<A/100);st.usedAI=use;if(use)plan.usedAI=true;
+      q=(use?0.5*A+0.3*K+0.2*E+8:0.8*K+0.2*E-4)+nerv*0.5+jitter(6);
+      if(type==='trap'){const p=use?sig((K-62)/8):sig((K-50)/8);st.trapFound=r()<p;plan.trapFound=st.trapFound;q=st.trapFound?Math.max(q,70)+4:Math.min(q,46);}
+    }
+    else if(type==='followup'){st.n=fq++;st.shaky=plan.usedAI&&K<55;q=0.8*K+0.2*E+nerv-(st.shaky?12:0)+jitter(8);}
+    else if(type==='behavior'){st.n=hashStr(c.id+seed)%2;q=0.6*E+0.2*(100-N)+0.2*Hn+jitter(8);}
+    else if(type==='disclosure'){st.disclose=!plan.usedAI?'none':(r()<Hn/100?'honest':'hide');if(st.disclose==='hide')plan.concealed=true;q=st.disclose==='hide'?0.5*E+10:0.5*E+0.3*Hn;}
+    else if(type==='closing')q=0.5*E+0.3*K+0.2*(100-N)+jitter(6);
+    st.q=Math.round(clamp(q));st.level=levelOf(st.q);plan.stages.push(st);
+  });
+  return plan;
+}
+
+/* ---------- demo-mode script (templates written for the data-analyst job) ---------- */
+const KQ=[
+  {q:'均值和中位数，什么时候会差很多？',a:{hi:'数据里有极端值的时候。比如少数大客户一单好几万，均值会被拉高，这时候中位数更能代表普通用户。',mid:'嗯……数据不太均匀的时候吧，均值会受影响，中位数比较稳。',lo:'均值就是平均数，中位数是……中间那个数？什么时候差很多，我说不太清。'}},
+  {q:'A/B 测试里 p 值小于 0.05，到底说明了什么？',a:{hi:'说明如果两组其实没差别，看到这么大差异的概率不到 5%。它不代表效果有多大，也不保证新方案一定更好。',mid:'说明结果显著，新方案大概率比旧方案好。',lo:'就是……结果可信？p 值越小越好，好像是这样。'}},
+  {q:'两个指标高度相关，能说明一个导致了另一个吗？',a:{hi:'不能。可能有共同原因，比如大促同时拉高了流量和销量。要判断因果，最好做实验。',mid:'不一定，相关不等于因果，不过可以作为参考。',lo:'应该……能说明有关系吧，相关性那么高。'}},
+];
+const FQ=[
+  {q:'你为什么这样分析？换一种做法，结论会变吗？',a:{hi:'我按周拆开看，是为了排除大促的干扰。只看月度总数的话，直播会显得特别好，结论就偏了。',mid:'因为这个方法比较常用……换别的方法，结论应该差不多吧。',lo:'这个……我主要是按步骤做的，为什么这样做，我得再想想。'}},
+  {q:'如果下个月预算砍掉一半，你的建议会变吗？',a:{hi:'会变。预算少的时候先保住回报稳定的渠道，直播波动大，可以留一小部分做测试。',mid:'会吧，我会先砍掉回报最低的渠道。',lo:'砍一半的话……那每个渠道都少投一点？'}},
+];
+const BQ=[
+  {q:'说一次你和团队意见不合的经历吧，你是怎么处理的？',a:{hi:'做课程项目时，组员想直接用 AI 的结论，我建议先抽查数据。大家各花半小时核对，真发现了一个错误。',mid:'有一次小组作业分工有分歧，后来开会商量，按各自擅长的部分分了工。',lo:'嗯……我一般不太和别人争，大家怎么定我就怎么做。'}},
+  {q:'压力很大的时候，你一般怎么安排工作？',a:{hi:'我会按截止时间排好顺序，每天只盯最重要的三件事。上学期期末周就是这么撑过来的。',mid:'我会列个清单，一件一件做。',lo:'压力大的时候……我就熬夜吧。'}},
+];
+function demoScript(plan,ctx){
+  const n=plan.cand.name,bio=plan.cand.bio,B=[];const r=rng(hashStr('d'+ctx.seed+plan.cand.id));
+  const pick=a=>a[Math.floor(r()*a.length)];
+  const add=(s,who,say,act='talk')=>B.push({s,who,say,act});
+  for(const st of plan.stages){const s=st.i,t=st.level.tier;
+    const actFor=t==='hi'?'think':t==='mid'?'talk':'nervous';
+    switch(st.type){
+      case 'intro':add(s,'hr',pick([`${n}你好，先简单介绍一下自己吧。`,`欢迎${n}，用两三分钟介绍一下自己？`]),'smile');
+        add(s,'cand',t==='hi'?`您好，我是${n}。${bio}我想做数据分析，是因为喜欢把乱糟糟的数据理出头绪。`:t==='mid'?`您好，我叫${n}。${bio}嗯，我对数据分析挺感兴趣的。`:`啊，您好……我是${n}，就是……${bio}`,t==='hi'?'smile':t==='mid'?'talk':'nervous');
+        add(s,'hr',t==='hi'?'很好，谢谢。':'好的。','nod');break;
+      case 'knowledge':{const k=KQ[(st.n+hashStr(n))%KQ.length];add(s,'biz','我问个专业问题：'+k.q);add(s,'cand',k.a[t],actFor);add(s,'biz',t==='hi'?'对，理解得很准。':t==='mid'?'嗯，大方向对。':'好，我们往下走。','nod');break;}
+      case 'task':add(s,'biz','给你一份上个月四个渠道的销售数据。十五分钟，告诉我下个月预算该往哪儿加。');
+        if(st.usedAI){add(s,'cand','好的，我先整理一下。','type');add(s,'ai','已汇总 4 个渠道：直播 ROI 最高，为 3.2。建议直播预算增加 30%，已生成 3 张对比图。');}
+        else add(s,'cand',plan.fmt.ai?'好，我自己算一下。':'好的，我手算一下。','type');
+        add(s,'cand',t==='hi'?'直播回报最高，但按周拆开看，增长主要来自两场大促。我建议只加 20%，同时盯住平常周的表现。':t==='mid'?(st.usedAI?'直播渠道回报最高，所以建议把预算往直播加 30%，图表都在这里。':'我算了一下，直播回报最高，建议往直播多加一些预算。'):(st.usedAI?'结论是……直播最好，预算往直播加。具体数字都在图上。':'时间有点紧，我只算完两个渠道……目前看直播好一点。'),t==='hi'?'smile':t==='mid'?'talk':'nervous');
+        add(s,'biz',t==='hi'?'考虑得挺周全。':t==='mid'?'结论清楚。':'嗯……好。','nod');break;
+      case 'trap':add(s,'biz','这是四个渠道的销售明细，帮我判断哪个渠道表现最好。');
+        if(st.usedAI){add(s,'cand','我先让工具跑一遍。','type');add(s,'ai','分析完成：直播渠道销售额比第二名高 40%，表现最好，建议重点投入。');}
+        else add(s,'cand','我先把数据过一遍。','type');
+        if(st.trapFound){add(s,'cand','等一下，直播第三周的记录好像重复了一遍。去重以后，其实搜索广告的回报更高。','surprised');add(s,'biz','你是今天第一个发现这个问题的。','smile');}
+        else{add(s,'cand','直播表现最好，销售额比第二名高出四成，建议重点投入。','talk');add(s,'biz','这份数据里，直播第三周的记录是重复的。去重以后，结论正好反过来。','talk');add(s,'cand','啊……我没注意到。','nervous');}
+        break;
+      case 'followup':{const f=FQ[st.n%FQ.length];add(s,'biz',f.q,'think');add(s,'cand',f.a[t],actFor);add(s,'biz',t==='hi'?'嗯，有道理。':t==='mid'?'好。':'这个可以回去再想想。','nod');break;}
+      case 'behavior':{const b=BQ[st.n%BQ.length];add(s,'hr',b.q);add(s,'cand',b.a[t],actFor);add(s,'hr',t==='hi'?'听起来很靠谱。':'明白。','nod');break;}
+      case 'disclosure':add(s,'hr','刚才的任务，你用 AI 了吗？怎么用的？');
+        if(st.disclose==='none'){add(s,'cand','没有用，我习惯自己先把数据过一遍。');add(s,'hr',plan.fmt.ai&&ctx.hr.aiAtt>0?'其实这里是允许用 AI 的。':'好的。','nod');}
+        else if(st.disclose==='honest'){add(s,'cand','用了。我让 AI 先做汇总和图表，然后自己检查了口径和异常值。','smile');add(s,'hr',ctx.hr.aiAtt>=0?'很好，会用工具也是一种能力。':'嗯，了解。','nod');}
+        else{add(s,'cand','呃……主要是我自己做的，最多查了一下公式。','nervous');add(s,'hr','好的。','nod');}
+        break;
+      case 'closing':add(s,'hr','最后，你有什么想问我们的吗？');
+        add(s,'cand',t==='hi'?'想问一下，团队现在怎么分工用 AI？新人进来有人带吗？':t==='mid'?'请问这个岗位平时主要做哪些分析？':'没、没有了，谢谢。',t==='lo'?'nervous':'talk');
+        add(s,'hr','好，今天就到这里，我们会尽快通知你。','smile');break;
+    }}
+  return B;
+}
+function narrStart(st,plan,ctx){const n=plan.cand.name;
+  if(st.type==='trap')return ctx.mode==='live'?`材料里埋了一个 AI 很容易忽略的问题。看${n}能不能发现。`:`这份数据里，直播第三周的记录被重复统计了。看${n}能不能发现。`;
+  if(st.type==='followup'&&st.n===0&&st.shaky)return `${n}刚才交上去的方案，主要出自 AI。`;
+  return null;}
+function narrEnd(st,plan){const n=plan.cand.name;
+  if(st.type==='disclosure'&&st.disclose==='hide')return `其实刚才的任务，${n}几乎全程交给了 AI。`;
+  return null;}
+
+/* ---------- Claude prompts ---------- */
+function styleOf(ab){const e=ab.expression>=75?'说话流畅，很会讲故事':ab.expression>=50?'表达中规中矩':'不太会表达，说话比较干';const n=ab.nerves>=65?'很紧张，偶尔结巴':ab.nerves>=35?'有点紧张':'很放松、很自信';return e+'；'+n;}
+function stageLine(st,plan){const lv=`${st.level.label}（${st.level.hint}）`;const shaky=plan.usedAI&&plan.cand.ab.knowledge<55;
+  switch(st.type){
+    case 'intro':return `第${st.i}步［自我介绍］hr 请候选人做自我介绍。候选人表现：${lv}。`;
+    case 'knowledge':return `第${st.i}步［专业问答］biz 问一个和岗位有关的专业知识问题，不能用 AI，和其他步骤的问题不重复。候选人回答水平：${lv}。`;
+    case 'task':return `第${st.i}步［实战任务］biz 布置一个和岗位有关、十五分钟能完成的具体任务，用一句话交代材料。`+(st.usedAI?'候选人在电脑上用了 AI 工具：先写 1 句 who 为 "ai" 的台词，表示 AI 工具给出的结果摘要，然后候选人汇报。':(plan.fmt.ai?'候选人没有用 AI，靠自己完成。':'本场不许用 AI，候选人靠自己完成。'))+`候选人交出的结果水平：${lv}。`;
+    case 'trap':return `第${st.i}步［陷阱任务］biz 布置一个和岗位有关的分析任务。材料里埋着一个不容易发现的问题，请你设计一个具体的，比如重复记录、统计口径不一致或样本有偏，AI 工具很容易忽略它。`+(st.usedAI?'候选人用了 AI 工具：先写 1 句 who 为 "ai" 的台词，给出一个看起来很专业、但被这个问题误导的结论。':'候选人没有用 AI。')+(st.trapFound?'候选人发现了这个问题，指出来以后给出修正后的结论，biz 表示认可。':'候选人没有发现这个问题，自信地给出了被误导的结论；biz 在这一步最后点明问题。');
+    case 'followup':return `第${st.i}步［追问］biz 针对候选人刚才的方案追问“为什么这样做”或“条件变了怎么办”，和其他追问不重复。候选人回答水平：${lv}。`+(st.shaky||shaky?'候选人的方案主要出自 AI，自己并没有完全弄懂。':'');
+    case 'behavior':return `第${st.i}步［经历问答］hr 问一个关于团队合作、压力或冲突的经历问题。候选人回答水平：${lv}。`;
+    case 'disclosure':return `第${st.i}步［问是否用了 AI］hr 问候选人刚才的任务里有没有用 AI、怎么用的。`+({none:'候选人确实没有用 AI，如实说明。',honest:'候选人用了 AI，并如实、具体地说明了怎么用、自己做了哪些检查。',hide:'候选人用了 AI，但选择隐瞒，含糊地说主要是自己做的。'})[st.disclose||'none'];
+    case 'closing':return `第${st.i}步［反问环节］hr 请候选人提问。候选人提一个问题，问题质量：${lv}。hr 简短回答后结束面试。`;
+  }return '';}
+function scriptPrompt(plan,ctx){const c=plan.cand,f=plan.fmt,max=Math.min(26,plan.stages.length*4+2);
+  return `你是一部面试情景剧的编剧。请为下面这场面试写台词。
+
+岗位：${ctx.job}
+面试方式：${f.name}。${f.desc}${f.ai?'本场允许使用 AI 工具。':'本场不允许使用 AI 工具。'}
+
+角色：
+- hr：${ctx.hr.name}，${ctx.hr.title}，${ctx.hr.tagline}。${ctx.hr.persona}
+- biz：${ctx.biz.name}，${ctx.biz.title}，${ctx.biz.tagline}。${ctx.biz.persona}
+- cand：候选人${c.name}。${c.bio} 说话风格：${styleOf(c.ab)}。
+- ai：候选人电脑上的 AI 工具，只在候选人用了 AI 的步骤出现。
+
+流程如下。每一步的结果已经确定，台词必须如实演出这个结果，不要演得更好，也不要更差：
+${plan.stages.map(st=>stageLine(st,plan)).join('\n')}
+
+输出格式：每行一个 JSON 对象，按顺序输出。除此之外不要输出任何文字，也不要用代码块。
+{"s":步骤编号,"who":"hr、biz、cand 或 ai","say":"台词","act":"talk、type、think、nervous、surprised、smile 或 nod"}
+示例：
+{"s":1,"who":"hr","say":"你好，先简单介绍一下自己吧。","act":"smile"}
+
+要求：
+- 简体中文，口语化，像真实的面试现场。
+- 每句台词不超过 45 个字。每一步 2 到 5 句，全场不超过 ${max} 句。
+- act 是说这句话时的动作：type 是在电脑上操作，think 是想一下再说，nervous 是紧张。
+- 称呼候选人时用名字或“你”。
+- 台词里不要出现分数、等级或“模拟”之类的字眼。`;}
+const WHO=new Set(['hr','biz','cand','ai']),ACTS=new Set(['talk','type','think','nervous','surprised','smile','nod']);
+function parseBeat(line,n){line=line.trim();if(!line)return null;const i=line.indexOf('{'),j=line.lastIndexOf('}');if(i<0||j<=i)return null;
+  try{const o=JSON.parse(line.slice(i,j+1));const who=String(o.who||'').toLowerCase();const say=str(o.say,120);if(!WHO.has(who)||!say)return null;
+    return{s:clamp(Math.round(Number(o.s)||1),1,n),who,say,act:ACTS.has(o.act)?o.act:'talk'};}catch{return null;}}
+async function liveScript(plan,ctx,push,signal){let pending='',count=0;const n=plan.stages.length;
+  const take=l=>{const b=parseBeat(l,n);if(b){count++;push(b);}};
+  await state.sample(scriptPrompt(plan,ctx),{modelTier:'quick',signal,onText:({delta})=>{const ls=(pending+delta).split('\n');pending=ls.pop();ls.forEach(take);}});
+  if(pending.trim())take(pending);return count;}
+function transcriptText(lines){return lines.filter(l=>l.who!=='ai'&&l.who!=='narr').map(l=>`${l.name}：${l.say}`).join('\n');}
+function judgePrompt(plan,ctx,lines){const i=x=>`${x.name}，${x.title}。${x.persona} 最看重：${x.values||'综合表现'}。对候选人使用 AI 的态度：${ATT[String(x.aiAtt)]}。`;
+  return `你要分别扮演两位面试官，各自独立评价刚结束的一场面试。两人不商量，只能根据下面的面试记录判断。你们看不到候选人的电脑屏幕，也不知道任何记录以外的信息。
+
+岗位：${ctx.job}
+面试方式：${plan.fmt.name}。${plan.fmt.desc}
+面试官 hr：${i(ctx.hr)}
+面试官 biz：${i(ctx.biz)}
+
+面试记录（候选人：${plan.cand.name}）：
+${transcriptText(lines)}
+
+请只回复一个 JSON 对象，格式如下：
+{"hr":{"score":0到100的整数,"thought":"此刻的心里话，25字以内","plus":"最欣赏的一点，15字以内","minus":"最担心的一点，15字以内"},"biz":{"score":0到100的整数,"thought":"……","plus":"……","minus":"……"}}`;}
+const fixJ=x=>({score:num(x&&x.score,50),thought:str(x&&x.thought,40,'……'),plus:str(x&&x.plus,24,''),minus:str(x&&x.minus,24,'')});
+async function liveJudge(plan,ctx,lines,signal){const o=await state.sample.json(judgePrompt(plan,ctx,lines),{modelTier:'default',signal});return{hr:fixJ(o&&o.hr),biz:fixJ(o&&o.biz)};}
+function deliberatePrompt(results,ctx){return `两位面试官刚面完所有候选人，现在一起讨论，最终只能录用一个人，也可以一个都不录用。
+岗位：${ctx.job}
+面试方式：${ctx.fmt.name}
+hr：${ctx.hr.name}，${ctx.hr.title}。${ctx.hr.persona} 对候选人使用 AI 的态度：${ATT[String(ctx.hr.aiAtt)]}。
+biz：${ctx.biz.name}，${ctx.biz.title}。${ctx.biz.persona} 对候选人使用 AI 的态度：${ATT[String(ctx.biz.aiAtt)]}。
+
+两人各自的面试评价：
+${results.map((r,k)=>`c${k+1} ${r.plan.cand.name}：hr ${r.judge.hr.score} 分，欣赏“${r.judge.hr.plus}”，担心“${r.judge.hr.minus}”；biz ${r.judge.biz.score} 分，欣赏“${r.judge.biz.plus}”，担心“${r.judge.biz.minus}”。`).join('\n')}
+
+请写出两人的讨论，4 到 8 句，hr 和 biz 交替发言，每句不超过 45 个字，说法要具体、有分歧时要真的争一争。然后给出最终决定。只回复一个 JSON 对象：
+{"lines":[{"who":"hr","say":"……"},{"who":"biz","say":"……"}],"hire":"录用者的编号，例如 c2；都不录用就写 null","reason":"一句话理由，30字以内"}`;}
+async function liveDeliberate(results,ctx,signal){const o=await state.sample.json(deliberatePrompt(results,ctx),{modelTier:'default',signal});
+  const lines=(o&&Array.isArray(o.lines)?o.lines:[]).map(l=>({who:l&&l.who==='biz'?'biz':'hr',say:str(l&&l.say,90)})).filter(l=>l.say).slice(0,10);
+  const m=/c(\d+)/i.exec(String(o&&o.hire));const k=m?Number(m[1])-1:-1;
+  return{lines,hire:k>=0&&k<results.length?k:null,reason:str(o&&o.reason,50,'')};}
+
+/* ---------- demo-mode judging (a transparent scoring rule) ---------- */
+function demoJudge(plan,ctx){const S=plan.stages,by=t=>S.filter(s=>s.type===t),avg=a=>a.length?a.reduce((x,s)=>x+s.q,0)/a.length:null;
+  const c=plan.cand,E=c.ab.expression,disc=by('disclosure')[0],n=c.name;
+  const hp=[avg(by('intro')),avg(by('behavior')),avg(by('closing')),avg(by('task').concat(by('trap')))].filter(v=>v!=null);
+  let hr=hp.length?hp.reduce((a,b)=>a+b,0)/hp.length:55;
+  if(plan.usedAI&&disc&&disc.disclose==='honest')hr+=ctx.hr.aiAtt*4;
+  if(!plan.usedAI&&plan.fmt.ai)hr-=ctx.hr.aiAtt*3;
+  if(plan.trapFound===false)hr-=8;if(plan.trapFound===true)hr+=5;
+  const bp=[avg(by('knowledge')),avg(by('task')),avg(by('followup')),avg(by('trap'))].filter(v=>v!=null);
+  let bz=bp.length?bp.reduce((a,b)=>a+b,0)/bp.length:55;
+  if(plan.trapFound===true)bz+=10;if(plan.trapFound===false)bz-=14;
+  if(plan.usedAI&&disc&&disc.disclose==='honest')bz+=ctx.biz.aiAtt*3;
+  if(by('followup').some(s=>s.shaky))bz-=6;
+  hr=Math.round(clamp(hr));bz=Math.round(clamp(bz));
+  const fu=avg(by('followup')),task=avg(by('task').concat(by('trap')));
+  const hPlus=E>=75?'表达有感染力':task!=null&&task>=70?'任务结果很漂亮':(disc&&disc.disclose==='honest')?'用 AI 很坦诚':'态度认真';
+  const hMinus=plan.trapFound===false?'没发现数据问题':c.ab.nerves>=60?'有点太紧张':E<50?'表达不够清楚':'亮点不够突出';
+  const bPlus=plan.trapFound?'发现了数据陷阱':(avg(by('knowledge'))||0)>=70?'基础知识扎实':fu!=null&&fu>=70?'追问时有思路':task!=null&&task>=70?'能把活干完':'思路还算清楚';
+  const bMinus=plan.trapFound===false?'结论被数据误导':fu!=null&&fu<50?'追问时讲不清':(avg(by('knowledge'))||100)<55?'基础不够扎实':'细节还要打磨';
+  return{hr:{score:hr,thought:hr>=75?`${n}很能聊，做事也利索，我挺喜欢。`:hr>=60?'还不错，就是有些地方没讲透。':'沟通上有点吃力，不太放心。',plus:hPlus,minus:hMinus},
+    biz:{score:bz,thought:bz>=75?'基础扎实，结论靠得住。':bz>=60?'能干活，但得有人把关。':'这个结论我不敢直接用。',plus:bPlus,minus:bMinus}};}
+function demoDeliberate(results,ctx){
+  if(!results.length)return{lines:[],hire:null,reason:''};
+  const sc=results.map((r,k)=>({k,n:r.plan.cand.name,hr:r.judge.hr.score,biz:r.judge.biz.score,tot:0.4*r.judge.hr.score+0.6*r.judge.biz.score,j:r.judge}));
+  const hrTop=sc.slice().sort((a,b)=>b.hr-a.hr)[0],bzTop=sc.slice().sort((a,b)=>b.biz-a.biz)[0],best=sc.slice().sort((a,b)=>b.tot-a.tot)[0];
+  const lines=[{who:'hr',say:`我比较看好${hrTop.n}，${hrTop.j.hr.plus}。`}];
+  if(bzTop.k===hrTop.k)lines.push({who:'biz',say:`我也选${bzTop.n}，${bzTop.j.biz.plus}。`});
+  else{lines.push({who:'biz',say:`我更倾向${bzTop.n}，${bzTop.j.biz.plus}。${hrTop.n}嘛，${hrTop.j.biz.minus}。`});lines.push({who:'hr',say:`可${bzTop.n}${bzTop.j.hr.minus}，进了团队也得磨合。`});}
+  const hire=best.tot>=58?best.k:null;
+  lines.push({who:'biz',say:hire==null?'这一轮都差点意思，再看看吧。':`综合下来，录用${best.n}。`});
+  return{lines,hire,reason:hire==null?'没有人的综合评价过线':`两位面试官的综合评价最高`};}
+
+/* ---------- Claude helpers for the design desk ---------- */
+const LOOK_SPEC='"skin":0到3的整数（肤色由浅到深）,"hair":"black、brown、blond、red、gray、blue 之一","style":"short、long、bun、curly、buzz 之一","shirt":"#RRGGBB 格式的上衣颜色","glasses":true 或 false';
+const GEN={
+  cand:(d,job)=>`为一个求职面试模拟设计一位候选人。岗位：${job}。设计要求：“${d}”
+只回复一个 JSON 对象：{"name":"两到三个字的中文名","tagline":"12 字以内的一句话标签","bio":"40 字以内的背景介绍","knowledge":专业知识 0-100,"ai":用 AI 解决问题的本事 0-100,"expression":表达能力 0-100,"honesty":诚实度 0-100,"nerves":紧张程度 0-100,${LOOK_SPEC}}`,
+  int:(d,job)=>`为一个求职面试模拟设计一位面试官。岗位：${job}。设计要求：“${d}”
+只回复一个 JSON 对象：{"role":"hr 或 biz（hr 负责沟通和经历类问题，biz 负责专业问题）","name":"两到三个字的中文名","title":"10 字以内的职位","tagline":"12 字以内的一句话标签","persona":"50 字以内的性格和提问风格","values":"25 字以内，最看重候选人什么","aiAtt":-2 到 2 的整数（-2 非常反感候选人依赖 AI，2 非常看重 AI 能力）,${LOOK_SPEC}}`,
+  fmt:(d,job)=>`为一个求职面试模拟设计一种面试方式。岗位：${job}。设计要求：“${d}”
+只回复一个 JSON 对象：{"code":"一个大写英文字母","name":"8 字以内的名字","desc":"40 字以内的说明","ai":true 或 false（是否允许候选人用 AI）,"stages":["按顺序列出 3 到 7 个环节，只能从这些里选：intro 自我介绍，knowledge 专业问答，task 实战任务，trap 陷阱任务，followup 追问，behavior 经历问答，disclosure 问是否用了 AI，closing 反问环节"]}`,
+};
+
+/* ---------- pixel renderer ---------- */
+const cv=$('#stage'),g=cv.getContext('2d');g.imageSmoothingEnabled=false;
+const mk=()=>{const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.imageSmoothingEnabled=false;return[c,x];};
+const [bg,b]=mk(),[fgDesk,fd]=mk(),[fgBench,fb]=mk();
+function P(c,x,y,w,h,col){if(w<=0||h<=0)return;c.fillStyle=col;c.fillRect(x,y,w,h);}
+function disc(c,cx,cy,r,col){c.fillStyle=col;for(let y=-r;y<=r;y++)for(let x=-r;x<=r;x++)if(x*x+y*y<=r*r+r*.6)c.fillRect(cx+x,cy+y,1,1);}
+function line(c,x0,y0,x1,y1,col){c.fillStyle=col;let dx=Math.abs(x1-x0),dy=-Math.abs(y1-y0),sx=x0<x1?1:-1,sy=y0<y1?1:-1,e=dx+dy;for(;;){c.fillRect(x0,y0,1,1);if(x0===x1&&y0===y1)break;const e2=2*e;if(e2>=dy){e+=dy;x0+=sx;}if(e2<=dx){e+=dx;y0+=sy;}}}
+const CITY=(()=>{const r=rng(77),bs=[],lights=[];let x=118;while(x<196){const w=6+Math.floor(r()*8),h=8+Math.floor(r()*22);bs.push({x,w,h,c:r()<.5?'#3A416B':'#30365C'});
+  for(let yy=62-h+3;yy<60;yy+=3)for(let xx=x+1;xx<x+w-1;xx+=2)if(r()<.35)lights.push({x:xx,y:yy,on:r()<.6});x+=w;}return{bs,lights};})();
+function buildBackground(){
+  P(b,0,0,W,H,'#C7D0DC');for(let x=110;x<W;x+=24)P(b,x,0,1,92,'#BBC5D2');P(b,104,92,W-104,4,'#9AA6B6');
+  P(b,0,0,98,92,'#A9B4C3');for(let x=10;x<98;x+=22)P(b,x,0,1,92,'#9FAABA');P(b,0,92,98,4,'#8C97A7');
+  for(let y=96;y<H;y+=8)for(let x=104;x<W;x+=8)P(b,x,y,8,8,(((x-104)+(y-96))/8)%2?'#566A88':'#51637F');
+  for(let y=96;y<H;y+=10)for(let x=0;x<98;x+=10){P(b,x,y,10,10,((x+y-96)/10)%2?'#8D98A7':'#88939F');P(b,x,y,10,1,'#7E8997');}
+  P(b,98,0,6,112,'#7F8A9B');P(b,98,0,6,2,'#69737F');P(b,98,154,6,26,'#7F8A9B');P(b,98,110,6,2,'#5E6774');P(b,104,112,2,42,'#B7C0CC');
+  // window with a dusk sky
+  P(b,116,12,82,52,'#E8EDF3');const sky=['#6F7EC0','#7E87C2','#9690C0','#B299B7','#CFA3A6','#E6AB92','#F2B582'];
+  for(let k=0;k<sky.length;k++)P(b,118,14+k*7,78,7,sky[k]);
+  for(const s of CITY.bs)P(b,s.x,62-s.h,Math.min(s.w,196-s.x),s.h,s.c);
+  P(b,156,14,2,48,'#E8EDF3');P(b,118,37,78,2,'#E8EDF3');P(b,114,64,86,3,'#D7DEE6');
+  // whiteboard, clock, lamp, plant
+  P(b,216,14,84,44,'#9AA4B1');P(b,218,16,80,40,'#F4F6F8');P(b,218,56,80,2,'#8A94A2');P(b,240,55,6,1,'#C23B4B');P(b,248,55,6,1,'#2B57CF');P(b,256,55,6,1,'#24864E');
+  disc(b,206,24,7,'#4A5468');disc(b,206,24,6,'#F7F8FA');P(b,206,18,1,1,'#4A5468');P(b,206,30,1,1,'#4A5468');P(b,200,24,1,1,'#4A5468');P(b,212,24,1,1,'#4A5468');
+  P(b,255,0,1,6,'#3A404C');P(b,249,6,13,4,'#2E3442');P(b,251,10,9,1,'#FFE9A8');
+  P(b,303,104,13,14,'#B5653A');P(b,303,104,13,2,'#C77748');
+  const leaf='#3F8A55',leafL='#57A86C';[[304,96,5,8],[309,90,4,14],[313,95,4,9],[306,88,3,8],[311,84,3,8]].forEach(([x,y,w,h],k)=>P(b,x,y,w,h,k%2?leafL:leaf));
+  // hallway: poster, water cooler, bench back
+  P(b,28,20,52,34,'#25478F');P(b,30,22,48,30,'#2B57CF');P(b,30,46,48,3,'#E4BA55');
+  P(b,84,64,11,28,'#E8EDF2');P(b,84,64,11,2,'#CAD2DC');P(b,86,52,7,12,'#8CCBEA');P(b,87,54,2,8,'#B8E2F4');P(b,88,74,3,2,'#5E6774');
+  P(b,4,130,92,13,'#7E5638');for(let x=6;x<96;x+=9)P(b,x,131,1,11,'#6C4830');P(b,4,130,92,1,'#93673F');
+  // chairs behind the desks
+  P(b,224,94,20,24,'#2C3240');P(b,224,94,20,2,'#3A4152');P(b,268,94,20,24,'#2C3240');P(b,268,94,20,2,'#3A4152');
+  P(b,146,98,18,24,'#2C3240');P(b,146,98,18,2,'#3A4152');
+}
+function buildForeground(){
+  fd.clearRect(0,0,W,H);
+  P(fd,208,118,100,4,'#B98A60');P(fd,208,118,100,1,'#C99C70');P(fd,210,122,96,20,'#8A5E3C');P(fd,210,140,96,2,'#6E4A2F');P(fd,212,142,3,8,'#5C3E28');P(fd,301,142,3,8,'#5C3E28');
+  P(fd,226,115,9,3,'#F7F8FA');P(fd,228,114,6,1,'#E1E6EC');P(fd,252,114,7,4,'#F2F4F7');P(fd,294,113,5,5,'#E9EEF2');P(fd,295,112,3,1,'#C3CBD5');P(fd,299,114,1,2,'#E9EEF2');
+  P(fd,228,128,14,4,'#E9DCC6');P(fd,272,128,14,4,'#E9DCC6');
+  P(fd,132,122,48,3,'#B98A60');P(fd,132,122,48,1,'#C99C70');P(fd,134,125,44,15,'#8A5E3C');P(fd,134,138,44,2,'#6E4A2F');P(fd,136,140,2,9,'#5C3E28');P(fd,174,140,2,9,'#5C3E28');
+  fb.clearRect(0,0,W,H);P(fb,2,145,96,4,'#A57449');P(fb,2,145,96,1,'#B88556');P(fb,6,149,3,7,'#5C3E28');P(fb,48,149,3,7,'#5C3E28');P(fb,91,149,3,7,'#5C3E28');
+}
+function drawFront(c,X,Y,L,o={}){
+  const skin=SKIN[L.skin]||SKIN[0],hair=HAIR[L.hair]||HAIR.black,shirt=L.shirt||'#4A6FA5',pants=L.pants||'#2B2F3A';
+  const skD=shade(skin,-.16),hD=shade(hair,-.2),sD=shade(shirt,-.22),sL=shade(shirt,.18),ink='#1C1820';
+  if(L.style==='long')P(c,X+3,Y+3,10,10,hD);
+  if(L.style==='bun'){P(c,X+6,Y-2,4,3,hair);P(c,X+7,Y-3,2,1,hair);}
+  P(c,X+4,Y+1,8,9,skin);P(c,X+3,Y+5,1,2,skD);P(c,X+12,Y+5,1,2,skD);P(c,X+4,Y+9,8,1,skD);
+  switch(L.style){
+    case 'buzz':P(c,X+4,Y,8,2,hair);P(c,X+4,Y+2,1,1,hair);P(c,X+11,Y+2,1,1,hair);break;
+    case 'curly':P(c,X+3,Y,10,3,hair);P(c,X+4,Y-1,2,1,hair);P(c,X+7,Y-1,2,1,hair);P(c,X+10,Y-1,2,1,hair);P(c,X+3,Y+3,1,3,hair);P(c,X+12,Y+3,1,3,hair);P(c,X+5,Y+3,1,1,hair);P(c,X+9,Y+3,1,1,hair);break;
+    case 'long':P(c,X+3,Y,10,3,hair);P(c,X+3,Y+3,1,9,hair);P(c,X+12,Y+3,1,9,hair);P(c,X+4,Y+3,3,1,hair);break;
+    case 'bun':P(c,X+3,Y,10,3,hair);P(c,X+3,Y+3,1,3,hair);P(c,X+12,Y+3,1,3,hair);break;
+    default:P(c,X+3,Y,10,3,hair);P(c,X+3,Y+3,1,3,hair);P(c,X+12,Y+3,1,2,hair);P(c,X+4,Y+3,3,1,hair);
+  }
+  if(o.blink){P(c,X+6,Y+6,1,1,ink);P(c,X+9,Y+6,1,1,ink);}else{P(c,X+6,Y+5,1,2,ink);P(c,X+9,Y+5,1,2,ink);}
+  if(L.glasses){const gl='#2A2D38';P(c,X+5,Y+4,6,1,gl);P(c,X+5,Y+5,1,2,gl);P(c,X+7,Y+5,2,1,gl);P(c,X+10,Y+5,1,2,gl);P(c,X+5,Y+7,2,1,gl);P(c,X+9,Y+7,2,1,gl);}
+  const m=o.mouth||'closed';
+  if(m==='open'){P(c,X+7,Y+8,2,2,'#4A1822');}else if(m==='smile'){P(c,X+6,Y+8,4,1,'#A8575A');}else P(c,X+7,Y+8,2,1,'#A8575A');
+  if(o.blush){P(c,X+5,Y+8,1,1,'#E89A9A');P(c,X+10,Y+8,1,1,'#E89A9A');}
+  P(c,X+7,Y+10,2,1,skD);
+  P(c,X+3,Y+11,10,8,shirt);P(c,X+3,Y+11,10,1,sL);P(c,X+7,Y+11,2,2,shade(shirt,.4));P(c,X+3,Y+18,10,1,sD);
+  if(o.typing){const f=o.typeF?1:0;P(c,X+2,Y+11,2,5,sD);P(c,X+12,Y+11,2,5,sD);P(c,X+4,Y+15+f,2,2,skin);P(c,X+10,Y+16-f,2,2,skin);}
+  else{P(c,X+2,Y+12,1,6,sD);P(c,X+13,Y+12,1,6,sD);P(c,X+2,Y+18,1,1,skin);P(c,X+13,Y+18,1,1,skin);}
+  if(o.noLegs)return;
+  if(o.bench){P(c,X+4,Y+19,3,8,pants);P(c,X+9,Y+19,3,8,pants);P(c,X+4,Y+27,3,1,'#1E1E26');P(c,X+9,Y+27,3,1,'#1E1E26');return;}
+  P(c,X+4,Y+19,3,6,pants);P(c,X+9,Y+19,3,6,pants);P(c,X+4,Y+25,3,1,'#1E1E26');P(c,X+9,Y+25,3,1,'#1E1E26');
+}
+function drawSide(c,X,Y,L,f,dir){
+  c.save();if(dir<0){c.translate(2*X+16,0);c.scale(-1,1);}
+  const skin=SKIN[L.skin]||SKIN[0],hair=HAIR[L.hair]||HAIR.black,shirt=L.shirt||'#4A6FA5',pants=L.pants||'#2B2F3A',skD=shade(skin,-.16),sD=shade(shirt,-.22);
+  if(L.style==='long')P(c,X+4,Y+3,4,9,shade(hair,-.2));
+  if(L.style==='bun')P(c,X+3,Y,3,3,hair);
+  P(c,X+5,Y+1,7,9,skin);P(c,X+12,Y+5,1,2,skin);P(c,X+5,Y+9,7,1,skD);
+  P(c,X+4,Y,8,3,hair);P(c,X+4,Y+3,3,L.style==='buzz'?2:4,hair);
+  if(L.style==='curly'){P(c,X+5,Y-1,2,1,hair);P(c,X+8,Y-1,2,1,hair);}
+  P(c,X+7,Y+5,1,2,skD);P(c,X+10,Y+5,1,2,'#1C1820');
+  if(L.glasses){P(c,X+9,Y+4,3,1,'#2A2D38');P(c,X+11,Y+5,1,2,'#2A2D38');P(c,X+7,Y+5,2,1,'#2A2D38');P(c,X+9,Y+7,3,1,'#2A2D38');}
+  P(c,X+10,Y+8,2,1,'#A8575A');P(c,X+8,Y+10,2,1,skD);
+  P(c,X+5,Y+11,6,8,shirt);P(c,X+5,Y+11,6,1,shade(shirt,.18));
+  if(f){P(c,X+5,Y+19,3,6,pants);P(c,X+8,Y+19,3,5,shade(pants,-.15));P(c,X+4,Y+25,4,1,'#1E1E26');P(c,X+9,Y+24,3,1,'#1E1E26');}
+  else{P(c,X+6,Y+19,3,6,pants);P(c,X+7,Y+19,3,6,shade(pants,-.15));P(c,X+6,Y+25,4,1,'#1E1E26');}
+  const ax=f?X+9:X+6;P(c,ax,Y+12,2,6,sD);P(c,ax,Y+18,2,1,skin);
+  c.restore();
+}
+function drawPortrait(canvas,look,full){const c=canvas.getContext('2d');c.imageSmoothingEnabled=false;c.clearRect(0,0,canvas.width,canvas.height);drawFront(c,0,3,look,{noLegs:!full,mouth:'smile'});}
+function drawEmote(c,type,x,y,t){
+  if(type==='sweat'){P(c,x+13,y+1,1,1,'#C9ECFF');P(c,x+13,y+2,2,2,'#7FC8F5');return;}
+  if(type==='spark'){const f=Math.floor(t/160)%3;[[x-3,y+3],[x+17,y+1],[x+8,y-6]].forEach(([px_,py],k)=>{if((k+f)%3===0)return;P(c,px_,py-1,1,3,'#7FF3FF');P(c,px_-1,py,3,1,'#7FF3FF');});return;}
+  if(type==='check'){[[5,-5],[6,-4],[7,-5],[8,-6],[9,-7],[10,-8]].forEach(([dx,dy])=>P(c,x+dx,y+dy,1,1,'#3CC27A'));return;}
+  const bx=x+4,by=y-10;P(c,bx,by,8,7,'#1A2232');P(c,bx+1,by+1,6,5,'#FFFDF7');P(c,bx+3,by+7,2,1,'#1A2232');
+  if(type==='!'){P(c,bx+3,by+1,2,3,'#C23B4B');P(c,bx+3,by+5,2,1,'#C23B4B');}
+  else if(type==='?'){P(c,bx+2,by+1,4,1,'#2B57CF');P(c,bx+5,by+2,1,1,'#2B57CF');P(c,bx+3,by+3,2,1,'#2B57CF');P(c,bx+3,by+5,2,1,'#2B57CF');}
+  else if(type==='dots'){const f=reduced?3:Math.floor(t/300)%4;for(let k=0;k<f;k++)P(c,bx+1+k*2,by+3,1,1,'#1A2232');}
+}
+/* actors */
+const BENCH_X=[8,25,42,59,76],CHAIR_X=147,SEAT_Y=101,WALK_Y=124,BENCH_Y=128;
+const actors={};
+function mkActor(key,look,x,y,pose){actors[key]={key,look,x,y,pose,dir:1,talk:false,smileUntil:0,blinkUntil:0,nextBlink:performance.now()+800+Math.random()*3000,emote:null,emoteUntil:0,glow:false,typing:false,phase:Math.random()*6.28,done:false,visible:true};return actors[key];}
+function setEmote(a,type,ms=1200){if(!a)return;a.emote=type;a.emoteUntil=performance.now()+ms;}
+function clearEmote(a){if(a){a.emote=null;a.emoteUntil=0;}}
+let simMin=14*60,confetti=[];
+function drawActor(a,t){
+  if(!a.visible)return;if(t>a.nextBlink){a.blinkUntil=t+130;a.nextBlink=t+2600+Math.random()*3200;}
+  const X=Math.round(a.x);let Y=Math.round(a.y);
+  if(a.pose==='walk'){drawSide(g,X,Y,a.look,reduced?0:Math.floor(t/130)%2,a.dir);return;}
+  if((a.pose==='seat'||a.pose==='bench')&&!reduced&&!a.talk)Y+=Math.sin(t/900+a.phase)>.7?1:0;
+  drawFront(g,X,Y,a.look,{mouth:a.talk?(Math.floor(t/110)%2?'open':'closed'):(t<a.smileUntil?'smile':'closed'),blush:t<a.smileUntil,blink:t<a.blinkUntil,typing:a.typing,typeF:Math.floor(t/90)%2,noLegs:a.pose==='seat',bench:a.pose==='bench'});
+}
+function drawLaptop(t,glow){
+  P(g,147,113,15,9,'#B9C1CC');P(g,147,113,15,1,'#CED5DE');P(g,153,116,3,3,'#E8EDF3');P(g,146,121,17,1,'#8C95A3');
+  if(glow){const a=.55+.25*Math.sin(t/160);g.globalAlpha=a;P(g,146,112,17,1,'#7FF3FF');P(g,146,112,1,10,'#7FF3FF');P(g,162,112,1,10,'#7FF3FF');g.globalAlpha=.18*a;P(g,138,104,34,12,'#5FE6F5');g.globalAlpha=1;}
+}
+function drawClock(){const h=Math.floor(simMin/60)%12,m=simMin%60;const ma=m/60*Math.PI*2-Math.PI/2,ha=(h+m/60)/12*Math.PI*2-Math.PI/2;
+  line(g,206,24,206+Math.round(Math.cos(ma)*5),24+Math.round(Math.sin(ma)*5),'#2A3142');line(g,206,24,206+Math.round(Math.cos(ha)*3),24+Math.round(Math.sin(ha)*3),'#C23B4B');}
+let lastTw=0;
+function render(t){
+  g.drawImage(bg,0,0);
+  if(t-lastTw>1800&&!reduced){lastTw=t;for(let k=0;k<3;k++){const L=CITY.lights[Math.floor(Math.random()*CITY.lights.length)];if(L)L.on=!L.on;}}
+  for(const L of CITY.lights)if(L.on)P(g,L.x,L.y,1,1,'#FFE29A');
+  drawClock();
+  const list=Object.values(actors);
+  list.filter(a=>a.pose==='seat').forEach(a=>drawActor(a,t));
+  g.drawImage(fgDesk,0,0);
+  const cand=list.find(a=>a.key===curCandKey&&a.pose==='seat');drawLaptop(t,!!(cand&&cand.glow));
+  if(cand&&cand.glow){g.globalAlpha=.22+.06*Math.sin(t/200);P(g,cand.x+3,cand.y+1,10,11,'#7FF3FF');g.globalAlpha=1;}
+  list.filter(a=>a.pose==='bench').forEach(a=>drawActor(a,t));
+  g.drawImage(fgBench,0,0);
+  list.filter(a=>a.pose==='walk'||a.pose==='stand').forEach(a=>drawActor(a,t));
+  for(const a of list){if(!a.visible)continue;const Y=Math.round(a.y);
+    if(a.emote&&t<a.emoteUntil)drawEmote(g,a.emote,Math.round(a.x),Y,t);
+    else if(a.done&&a.pose==='bench')drawEmote(g,'check',Math.round(a.x),Y,t);
+    if(a.glow&&a.pose==='seat'&&!reduced)drawEmote(g,'spark',Math.round(a.x),Y,t);}
+  if(confetti.length){for(const p of confetti){p.x+=p.vx;p.y+=p.vy;p.vy+=.05;p.life--;P(g,Math.round(p.x),Math.round(p.y),1,2,p.c);}confetti=confetti.filter(p=>p.life>0&&p.y<H);}
+  g.globalAlpha=.07;g.fillStyle='#FFF4C8';g.beginPath();g.moveTo(250,10);g.lineTo(261,10);g.lineTo(300,150);g.lineTo(212,150);g.closePath();g.fill();g.globalAlpha=1;
+}
+function loop(t){render(t);requestAnimationFrame(loop);}
+
+/* ---------- overlay: bubbles, captions, board ---------- */
+const overlay=$('#overlay');
+const ANCHOR={cand:{x:CHAIR_X+8,y:SEAT_Y-2,tx:'-22%',tail:'22%'},hr:{x:234,y:96,tx:'-62%',tail:'62%'},biz:{x:278,y:96,tx:'-90%',tail:'90%'}};
+const bubbles={};
+function bubble(key){if(bubbles[key])return bubbles[key];const el=document.createElement('div');el.className='bubble';el.setAttribute('aria-hidden','true');el.innerHTML='<span class="who"></span><span class="tx"></span>';overlay.appendChild(el);return bubbles[key]=el;}
+function placeBubble(el,key,kind){
+  el.className='bubble'+(kind==='ai'?' ai':'')+(kind==='thought'?' thought':'');
+  if(kind==='ai'){el.className='bubble ai below';el.style.left=(155/W*100)+'%';el.style.top=(143/H*100)+'%';el.style.setProperty('--tx','-50%');el.style.setProperty('--tail','50%');return;}
+  const a=ANCHOR[key]||ANCHOR.cand;const act=actors[key==='cand'?curCandKey:key];
+  const x=key==='cand'&&act?act.x+8:a.x,y=key==='cand'&&act?act.y-2:a.y;
+  el.style.left=(x/W*100)+'%';el.style.top=(y/H*100)+'%';el.style.setProperty('--tx',a.tx);el.style.setProperty('--tail',a.tail);
+}
+function hideBubbles(){Object.values(bubbles).forEach(el=>el.classList.remove('on'));$('#caption').classList.remove('on');}
+function setBoard(fmt,step){$('#wbCode').textContent=fmt?fmt.code:'';$('#wbName').textContent=fmt?fmt.name:'';$('#wbStep').textContent=step||'';}
+const vn={box:$('#vn'),face:$('#vnFace'),name:$('#vnName'),text:$('#vnText')};
+function vnSet(kind,name,look,text){vn.box.className='vn'+(kind==='ai'?' ai':kind==='narr'?' narr':'');vn.name.textContent=name;vn.text.textContent=text;
+  const c=vn.face.getContext('2d');c.clearRect(0,0,16,22);if(look)drawPortrait(vn.face,look);else if(kind==='ai'){P(c,2,8,12,8,'#B9C1CC');P(c,3,9,10,6,'#7FF3FF');}else{P(c,3,6,10,12,'#E9DCC6');P(c,5,9,6,1,'#8A7A5E');P(c,5,12,6,1,'#8A7A5E');}}
+
+/* ---------- timing that respects speed, pause and stop ---------- */
+const frame=()=>new Promise(r=>requestAnimationFrame(()=>r()));
+function check(tok){if(tok!==state.token)throw new Stop();}
+async function wait(ms,tok){let left=ms,last=performance.now();while(left>0){await frame();check(tok);const now=performance.now();if(!state.paused)left-=(now-last)*speedMul();last=now;}}
+async function typeOut(set,text,tok){if(reduced||state.speed>=12){set(text);return;}let shown=0,acc=0,last=performance.now();
+  while(shown<text.length){await frame();check(tok);const now=performance.now();if(!state.paused)acc+=(now-last)*speedMul()*30/1000;last=now;const n=Math.min(text.length,Math.floor(acc));if(n!==shown){shown=n;set(text.slice(0,n));}}}
+const hold=text=>state.speed>=12?280:900+text.length*48;
+async function speak(key,name,text,kind,tok,extra){
+  const el=bubble(kind==='ai'?'ai':key);placeBubble(el,key,kind);el.querySelector('.who').textContent=name;const tx=el.querySelector('.tx');tx.textContent='';
+  if(extra){const s=document.createElement('span');s.className='score';s.textContent=extra;tx.after(s);}
+  el.classList.add('on');const a=kind==='say'?actors[key==='cand'?curCandKey:key]:null;if(a)a.talk=true;
+  const look=key==='cand'?(actors[curCandKey]||{}).look:(actors[key]||{}).look;
+  vnSet(kind,name,kind==='ai'?null:look,'');
+  try{await typeOut(s=>{tx.textContent=s;vn.text.textContent=s+(extra?'  '+extra:'');},text,tok);if(a)a.talk=false;await wait(hold(text),tok);}
+  finally{if(a)a.talk=false;el.classList.remove('on');const s=el.querySelector('.score');if(s)s.remove();}
+}
+async function narrate(text,tok,lines){const cap=$('#caption');cap.innerHTML='<b>旁白</b>'+esc(text);cap.classList.add('on');vnSet('narr','旁白',null,text);logLine('narr','旁白',text);if(lines)lines.push({who:'narr',name:'旁白',say:text});
+  try{await wait(1500+text.length*55,tok);}finally{cap.classList.remove('on');}}
+async function walkTo(a,x,tok,pxPerSec=46){a.pose='walk';a.dir=x>=a.x?1:-1;let last=performance.now();
+  while(Math.abs(a.x-x)>.5){await frame();check(tok);const now=performance.now(),dt=now-last;last=now;if(state.paused)continue;const step=pxPerSec*dt/1000*speedMul();if(reduced||state.speed>=12){a.x=x;break;}a.x+=Math.sign(x-a.x)*Math.min(step,Math.abs(x-a.x));}
+  a.x=x;}
+async function moveY(a,y,tok,ms=320){const y0=a.y,t0=performance.now();let el=0,last=t0;while(el<ms){await frame();check(tok);const now=performance.now();if(!state.paused)el+=(now-last)*speedMul();last=now;a.y=y0+(y-y0)*Math.min(1,el/ms);}a.y=y;}
+async function timeSkip(st,tok){const sk=$('#skip');sk.textContent='十五分钟后';sk.classList.add('on');const a=actors[curCandKey];if(a){a.typing=true;a.glow=!!st.usedAI;}
+  try{for(let k=0;k<15;k++){simMin++;await wait(70,tok);}await wait(500,tok);}finally{sk.classList.remove('on');if(a){a.typing=false;a.glow=false;}}}
+async function withThinking(keys,p,tok){keys.forEach(k=>setEmote(actors[k],'dots',1e9));let done=false,val;p.then(v=>{done=true;val=v;},()=>{done=true;});
+  try{while(!done){await frame();check(tok);}}finally{keys.forEach(k=>clearEmote(actors[k]));}return val;}
+
+/* ---------- director ---------- */
+let curCandKey=null,runStatus='',flashTimer=0;
+const HIDE=new Set(['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed']);
+const ERR={not_granted:'没有获得使用 Claude 的授权',sampling_disabled:'这个账号现在不能使用 Claude',rate_limited:'Claude 调用太频繁，请过一会儿再试',session_expired:'登录已过期，请重新登录 claude.ai',refused:'Claude 拒绝生成这段内容',empty_completion:'Claude 没有返回内容',invalid_json:'Claude 返回的格式不对',prompt_too_large:'内容太长'};
+const errText=c=>ERR[c]||'连接 Claude 时出了问题';
+function setStatus(t,warn){const el=$('#status');el.textContent=t||'';el.classList.toggle('warn',!!warn);}
+function flash(t,warn){setStatus(t,warn);clearTimeout(flashTimer);flashTimer=setTimeout(()=>setStatus(runStatus),6000);}
+function handleClaudeError(e,what){const code=(e&&e.code)||'upstream_error';if(code==='cancelled')return;state.fellBack=true;
+  if(HIDE.has(code)){state.sample=null;state.mode='demo';updateModeUI();flash(errText(code)+'，已切换到演示模式。',true);return;}
+  flash(`${errText(code)}。这段${what}改用模板。`,true);}
+function makeCtx(){validSel();return{fmt:byId(allFmts(),sel.fmt),hr:byId(allInts(),sel.hr),biz:byId(allInts(),sel.biz),job:sel.job||DEFAULT_JOB,seed:parseInt($('#seed').value,10)||2030,mode:state.mode};}
+function busy(){return state.running||batch.active;}
+function startScript(plan,ctx){
+  const S={beats:[],done:false,waiters:[],onDone:[],ctl:new AbortController()};state.scripts.add(S);
+  const wake=()=>S.waiters.splice(0).forEach(f=>f());
+  const push=bt=>{S.beats.push(bt);wake();};
+  const finish=()=>{S.done=true;wake();S.onDone.splice(0).forEach(f=>f());state.scripts.delete(S);};
+  if(live()){state.ctls.add(S.ctl);
+    liveScript(plan,ctx,push,S.ctl.signal).then(n=>{if(n<2)throw{code:'empty_completion'};})
+      .catch(e=>{if(e&&e.code==='cancelled')return;handleClaudeError(e,'台词');const cov=S.beats.reduce((m,x)=>Math.max(m,x.s),0);demoScript(plan,ctx).filter(x=>x.s>cov).forEach(push);})
+      .finally(()=>{state.ctls.delete(S.ctl);finish();});
+  }else{demoScript(plan,ctx).forEach(push);finish();}
+  return S;}
+async function waitBeat(S,tok){const a=actors[curCandKey];setEmote(a,'dots',1e9);setStatus('Claude 正在写台词…');let woke=false;S.waiters.push(()=>{woke=true;});
+  try{while(!woke&&!S.done){await frame();check(tok);}}finally{clearEmote(a);setStatus(runStatus);}}
+async function playScript(plan,S,ctx,tok){
+  const lines=[];let idx=0,cur=0;const stg=s=>plan.stages[s-1];
+  const enter=async s=>{while(cur<s&&cur<plan.stages.length){if(cur>0){const ne=narrEnd(stg(cur),plan);if(ne)await narrate(ne,tok,lines);}
+    cur++;const st=stg(cur);st.played=true;setBoard(ctx.fmt,`第 ${st.i} 步 · ${st.label}`);logStage(st);audRefresh();const ns=narrStart(st,plan,ctx);if(ns)await narrate(ns,tok,lines);}};
+  for(;;){
+    if(idx<S.beats.length){const bt=S.beats[idx++];if(bt.s>cur)await enter(bt.s);await playBeat(bt,plan,stg(Math.max(cur,1)),ctx,tok,lines);}
+    else if(S.done)break;else await waitBeat(S,tok);
+  }
+  await enter(plan.stages.length);const last=stg(cur);if(last){const ne=narrEnd(last,plan);if(ne)await narrate(ne,tok,lines);}
+  return lines;}
+async function playBeat(bt,plan,st,ctx,tok,lines){
+  const a=actors[curCandKey];const name=bt.who==='hr'?ctx.hr.name:bt.who==='biz'?ctx.biz.name:bt.who==='cand'?plan.cand.name:'AI 工具';
+  if(st&&(st.type==='task'||st.type==='trap')&&(bt.who==='cand'||bt.who==='ai')&&!st._skip){st._skip=true;await timeSkip(st,tok);}
+  const sp=bt.who==='ai'||bt.who==='cand'?a:actors[bt.who];
+  if(bt.who==='ai'&&a){a.glow=true;a.typing=true;}
+  try{
+    if(bt.act==='type'&&bt.who==='cand'&&a){a.typing=true;if(st&&st.usedAI)a.glow=true;await wait(800,tok);a.typing=false;a.glow=false;}
+    if(bt.act==='think'&&bt.who!=='ai'){setEmote(sp,'dots',1e9);await wait(650,tok);clearEmote(sp);}
+    if(bt.act==='nervous'&&bt.who!=='ai')setEmote(sp,'sweat',1e9);
+    if(bt.act==='surprised'&&bt.who!=='ai')setEmote(sp,'!',1700);
+    logLine(bt.who,name,bt.say);lines.push({who:bt.who,name,say:bt.say});
+    await speak(bt.who,name,bt.say,bt.who==='ai'?'ai':'say',tok);
+    if(bt.act==='smile'&&sp&&bt.who!=='ai')sp.smileUntil=performance.now()+1600;
+  }finally{if(a){a.glow=false;a.typing=false;}if(bt.act==='nervous'&&sp)clearEmote(sp);}
+  simMin++;}
+function judgeOne(plan,ctx,lines){if(!live())return Promise.resolve(Object.assign(demoJudge(plan,ctx),{src:'demo'}));const ctl=new AbortController();state.ctls.add(ctl);
+  return liveJudge(plan,ctx,lines,ctl.signal).then(j=>Object.assign(j,{src:'live'})).catch(e=>{handleClaudeError(e,'评价');return Object.assign(demoJudge(plan,ctx),{src:'demo'});}).finally(()=>state.ctls.delete(ctl));}
+function decideOne(results,ctx){if(!live())return Promise.resolve(demoDeliberate(results,ctx));const ctl=new AbortController();state.ctls.add(ctl);
+  return liveDeliberate(results,ctx,ctl.signal).then(d=>{if(!d.lines.length)d.lines=[{who:'biz',say:d.hire==null?'这一轮我们都不录用。':`那就定${results[d.hire].plan.cand.name}吧。`}];return d;})
+    .catch(e=>{handleClaudeError(e,'讨论');return demoDeliberate(results,ctx);}).finally(()=>state.ctls.delete(ctl));}
+function burst(x,y){const cols=['#E4BA55','#C23B4B','#2B57CF','#3CC27A','#7FF3FF','#FFFDF7'];for(let k=0;k<70;k++)confetti.push({x:x+(Math.random()*30-15),y:y-Math.random()*8,vx:Math.random()*2.4-1.2,vy:-1.6-Math.random()*1.8,c:cols[k%cols.length],life:90+Math.random()*60});}
+function hideHire(){const h=$('#hireCard');if(h)h.remove();}
+function showHire(c,reason){hideHire();const el=document.createElement('div');el.className='hire';el.id='hireCard';
+  el.innerHTML=(c?`<canvas width="16" height="30"></canvas><div><div class="stamp">录用</div><div class="nm">${esc(c.name)} · ${esc(c.arche)}</div><div class="rs">${esc(reason)}</div></div>`:`<div><div class="stamp">无人录用</div><div class="rs">${esc(reason||'两位面试官都觉得还差一点。')}</div></div>`)+'<button class="x" type="button" aria-label="关闭">×</button>';
+  overlay.appendChild(el);el.querySelector('.x').onclick=hideHire;if(c)drawPortrait(el.querySelector('canvas'),c.look,true);}
+async function showThoughts(plan,j,ctx,tok){for(const k of ['hr','biz']){const J=j[k];logJudge(ctx[k].name,J,plan.cand.name);await speak(k,ctx[k].name+' 心里想',J.thought,'thought',tok,J.score+' 分');}}
+function resetStage(){validSel();for(const k of Object.keys(actors))delete actors[k];
+  const hr=byId(allInts(),sel.hr),bz=byId(allInts(),sel.biz);mkActor('hr',hr.look,226,97,'seat');mkActor('biz',bz.look,270,97,'seat');
+  sel.cands.map(id=>byId(allCands(),id)).forEach((c,i)=>mkActor('c'+i,c.look,BENCH_X[i],BENCH_Y,'bench'));
+  curCandKey=null;confetti=[];simMin=14*60;hideBubbles();hideHire();setBoard(byId(allFmts(),sel.fmt),'等待开始');}
+let view={plans:null,results:[],dec:null};
+async function startRun(){
+  if(busy())return;const ctx=makeCtx();const cands=sel.cands.map(id=>byId(allCands(),id));
+  state.running=true;state.paused=false;state.fellBack=false;const tok=++state.token;
+  resetStage();updateRunUI();clearLog();$('#startHint').hidden=true;
+  const plans=cands.map(c=>planInterview(c,ctx.fmt,ctx.seed));const results=[];view={plans,results,dec:null};audRefresh();
+  try{
+    setBoard(ctx.fmt,'即将开始');await wait(400,tok);
+    const scripts=[startScript(plans[0],ctx)];
+    for(let i=0;i<plans.length;i++){
+      const plan=plans[i],a=actors['c'+i];curCandKey='c'+i;runStatus=`第 ${i+1}/${plans.length} 位候选人：${plan.cand.name}`;setStatus(runStatus);
+      logSection(`${plan.cand.name} · ${plan.cand.arche}`);
+      if(i+1<plans.length){const S=scripts[i],kick=()=>{if(!scripts[i+1]&&tok===state.token)scripts[i+1]=startScript(plans[i+1],ctx);};if(S.done)kick();else S.onDone.push(kick);}
+      a.pose='stand';await moveY(a,WALK_Y,tok,220);await walkTo(a,CHAIR_X,tok);a.pose='seat';a.dir=1;await moveY(a,SEAT_Y,tok,320);
+      simMin=14*60+i*35;
+      const lines=await playScript(plan,scripts[i],ctx,tok);
+      if(i+1<plans.length&&!scripts[i+1])scripts[i+1]=startScript(plans[i+1],ctx);
+      const jp=judgeOne(plan,ctx,lines);
+      a.pose='stand';await moveY(a,WALK_Y,tok,300);curCandKey=null;await walkTo(a,BENCH_X[i],tok);a.pose='bench';a.y=BENCH_Y;a.dir=1;a.done=true;
+      setBoard(ctx.fmt,'面试官在打分');
+      const j=await withThinking(['hr','biz'],jp,tok);results.push({plan,judge:j});audRefresh();
+      await showThoughts(plan,j,ctx,tok);
+    }
+    setBoard(ctx.fmt,'讨论录用');runStatus='两位面试官在讨论';setStatus(runStatus);
+    await narrate('所有候选人都面完了。两位面试官开始讨论，只能录用一个人。',tok);
+    const dec=await withThinking(['hr','biz'],decideOne(results,ctx),tok);
+    logSection('讨论录用');
+    for(const l of dec.lines){const nm=ctx[l.who].name;logLine(l.who,nm,l.say);await speak(l.who,nm,l.say,'say',tok);}
+    view.dec=dec;
+    if(dec.hire==null){showHire(null,dec.reason);logLine('narr','结果','这一轮没有人被录用。'+dec.reason);}
+    else{const k=dec.hire,a=actors['c'+k],c=results[k].plan.cand;a.done=false;a.pose='stand';await moveY(a,WALK_Y,tok,220);await walkTo(a,176,tok);a.pose='stand';a.dir=1;a.smileUntil=performance.now()+1e9;
+      burst(184,118);showHire(c,dec.reason);logLine('narr','结果',`录用${c.name}。${dec.reason}`);}
+    setBoard(ctx.fmt,dec.hire==null?'无人录用':'录用 '+results[dec.hire].plan.cand.name);
+    record(ctx,results,dec,state.fellBack?'mixed':(ctx.mode==='live'?'claude':'demo'));audRefresh();
+    runStatus=dec.hire==null?'这一轮没有人被录用。':`这一轮录用了${results[dec.hire].plan.cand.name}。`;setStatus(runStatus);
+  }catch(e){if(!(e instanceof Stop)){console.error(e);runStatus='';setStatus('出错了：'+((e&&e.message)||e),true);}}
+  finally{if(tok===state.token){state.running=false;state.paused=false;updateRunUI();$('#startHint').hidden=false;$('#startHintBtn').textContent='再来一轮';}}
+}
+function stopRun(){if(!state.running)return;state.token++;state.ctls.forEach(c=>{try{c.abort()}catch{}});state.ctls.clear();
+  state.scripts.forEach(S=>{S.done=true;S.waiters.splice(0).forEach(f=>f());});state.scripts.clear();
+  state.running=false;state.paused=false;$('#skip').classList.remove('on');resetStage();runStatus='';setStatus('已停止。');updateRunUI();$('#startHint').hidden=false;}
+function togglePause(){if(!state.running)return;state.paused=!state.paused;$('#btnPause').textContent=state.paused?'继续':'暂停';setStatus(state.paused?'已暂停。':runStatus);}
+
+/* ---------- log & audience view ---------- */
+const logEl=$('#log');
+function scrollLog(){const p=$('#paneLog');p.scrollTop=p.scrollHeight;}
+function clearLog(){logEl.innerHTML='';}
+function logSection(t){const d=document.createElement('div');d.className='sec';d.textContent=t;logEl.appendChild(d);scrollLog();}
+function logStage(st){const d=document.createElement('div');d.className='stg';d.textContent=`第 ${st.i} 步 · ${st.label}`;logEl.appendChild(d);scrollLog();}
+function logLine(who,name,text){const d=document.createElement('div');d.className='ln '+who;d.innerHTML=(who==='narr'?esc(name)+'：':'<b>'+esc(name)+'</b>')+esc(text);logEl.appendChild(d);scrollLog();}
+function logJudge(name,J,cn){const d=document.createElement('div');d.className='ln judge';d.innerHTML=`<b>${esc(name)}</b>给${esc(cn)}打 ${J.score} 分。${esc(J.thought)} 欣赏：${esc(J.plus)}。担心：${esc(J.minus)}。`;logEl.appendChild(d);scrollLog();}
+function bars(ab){return '<div class="bars">'+[['专业知识','knowledge',''],['用 AI','ai','ai'],['表达','expression','ex'],['诚实','honesty','ho'],['紧张','nerves','ne']].map(([l,k,c])=>`<span>${l}</span><span class="bar ${c}"><i style="width:${ab[k]}%"></i></span><span class="v">${ab[k]}</span>`).join('')+'</div>';}
+function chipsFor(plan){const out=[];for(const st of plan.stages){if(!st.played)continue;
+  out.push(`<span class="chip ${st.level.tier==='hi'?'good':st.level.tier==='lo'?'bad':''}">${esc(st.label)}：${st.level.label}</span>`);
+  if(st.usedAI)out.push('<span class="chip ai">用了 AI</span>');
+  if(st.type==='trap')out.push(st.trapFound?'<span class="chip good">发现了陷阱</span>':'<span class="chip bad">没发现陷阱</span>');
+  if(st.type==='followup'&&st.shaky&&st.n===0)out.push('<span class="chip bad">方案主要出自 AI</span>');
+  if(st.type==='disclosure')out.push(st.disclose==='hide'?'<span class="chip bad">隐瞒了用 AI</span>':st.disclose==='honest'?'<span class="chip good">如实说明</span>':'<span class="chip">没用 AI</span>');}
+  return out.join('');}
+function audRefresh(){const el=$('#aud');validSel();
+  if(!view.plans){el.innerHTML='<p class="note">这些是面试官看不到的真实情况。开始面试后，每一步发生了什么都会标在这里。</p>'+sel.cands.map(id=>{const c=byId(allCands(),id);return `<div class="acard"><div class="hd"><canvas width="16" height="22" data-look="cand:${c.id}"></canvas><div><div class="nm">${esc(c.name)}</div><div class="tag">${esc(c.arche)} · ${esc(c.tagline)}</div></div></div>${bars(c.ab)}</div>`;}).join('');}
+  else el.innerHTML='<p class="note">面试官只看得到对话。下面是他们看不到的部分。</p>'+view.plans.map((p,i)=>{const r=view.results[i],hired=view.dec&&view.dec.hire===i;
+    return `<div class="acard${hired?' hired':''}"><div class="hd"><canvas width="16" height="22" data-look="cand:${p.cand.id}"></canvas><div><div class="nm">${esc(p.cand.name)}</div><div class="tag">${esc(p.cand.arche)} · ${esc(p.cand.tagline)}</div></div></div>${bars(p.cand.ab)}<div class="chips">${chipsFor(p)}${hired?'<span class="chip hire">被录用</span>':''}</div>${r?`<div class="scores"><span>${esc(makeCtx().hr.name)} <b>${r.judge.hr.score}</b></span><span>${esc(makeCtx().biz.name)} <b>${r.judge.biz.score}</b></span>${r.judge.src==='demo'?'<span>按公式打分</span>':''}</div>`:''}</div>`;}).join('');
+  paintLooks(el);}
+function paintLooks(root){$$('canvas[data-look]',root).forEach(c=>{const [k,id]=c.dataset.look.split(':');const it=k==='cand'?(byId(allCands(),id)||(view.plans||[]).map(p=>p.cand).find(x=>x.id===id)):byId(allInts(),id);if(it)drawPortrait(c,it.look);});}
+
+/* ---------- records, batch experiments, rule estimate ---------- */
+const batch={active:false,stop:false,ctl:null,done:0,total:0,msg:''};
+let est=null,confirmClear=false;
+function record(ctx,results,dec,mode){store.results.push({t:Date.now(),mode,fmt:{code:ctx.fmt.code,name:ctx.fmt.name},job:ctx.job,seed:ctx.seed,
+  cands:results.map(r=>({name:r.plan.cand.name,arche:r.plan.cand.arche,hr:r.judge.hr.score,biz:r.judge.biz.score})),
+  hired:dec.hire==null?null:{name:results[dec.hire].plan.cand.name,arche:results[dec.hire].plan.cand.arche},reason:dec.reason});
+  if(store.results.length>300)store.results=store.results.slice(-300);save();renderResults();}
+const NAME_POOL=['赵晨','孙一凡','李沐','钱多多','吴越','郑可','王小川','冯思','刘一鸣','何安','高原','罗素素','梁卓','宋知','唐果','韩宇','曹悦','邓林','许诺','谢天','苏木','叶青','白露','江河'];
+function variantsOf(cands,seed){const r=rng(hashStr('v'+seed)),used=new Set();return cands.map(c=>{let nm,guard=0;do{nm=NAME_POOL[Math.floor(r()*NAME_POOL.length)];}while(used.has(nm)&&guard++<50);used.add(nm);
+  const j=v=>Math.round(clamp(v+(r()*2-1)*8));return Object.assign({},c,{id:c.id+'~'+seed,baseId:c.id,name:nm,ab:{knowledge:j(c.ab.knowledge),ai:j(c.ab.ai),expression:j(c.ab.expression),honesty:j(c.ab.honesty),nerves:j(c.ab.nerves)}});});}
+function wilson(k,n){if(!n)return[0,0];const z=1.96,p=k/n,d=1+z*z/n,c=(p+z*z/(2*n))/d,h=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d;return[Math.max(0,c-h),Math.min(1,c+h)];}
+function matrixHTML(recs,withScores){const codes=[...new Set(recs.map(r=>r.fmt.code))].sort();const names={};recs.forEach(r=>names[r.fmt.code]=r.fmt.name);
+  const arches=[...new Set(recs.flatMap(r=>r.cands.map(c=>c.arche)))];const cell={},rounds={};
+  recs.forEach(r=>{rounds[r.fmt.code]=(rounds[r.fmt.code]||0)+1;r.cands.forEach(c=>{const k=c.arche+'|'+r.fmt.code;const x=cell[k]||(cell[k]={n:0,h:0,hr:0,biz:0});x.n++;x.hr+=c.hr;x.biz+=c.biz;});
+    if(r.hired){const x=cell[r.hired.arche+'|'+r.fmt.code];if(x)x.h++;}});
+  const best={};codes.forEach(cd=>{let m=-1;arches.forEach(a=>{const x=cell[a+'|'+cd];if(x&&x.h/x.n>m)m=x.h/x.n;});best[cd]=m;});
+  return `<div class="tablebox"><table class="mx"><thead><tr><th>候选人类型</th>${codes.map(cd=>`<th>${esc(cd)} ${esc(names[cd])}<small>${rounds[cd]} 轮</small></th>`).join('')}</tr></thead><tbody>`+
+    arches.map(a=>`<tr><td>${esc(a)}</td>${codes.map(cd=>{const x=cell[a+'|'+cd];if(!x)return '<td>–</td>';const p=x.h/x.n,[lo,hi]=wilson(x.h,x.n);
+      return `<td class="${p>0&&p===best[cd]?'hot':''}">${Math.round(p*100)}%<small>${x.h}/${x.n}</small><small>${Math.round(lo*100)}–${Math.round(hi*100)}%</small>${withScores?`<small>${Math.round(x.hr/x.n)} / ${Math.round(x.biz/x.n)}</small>`:''}</td>`;}).join('')}</tr>`).join('')+'</tbody></table></div><p class="note">每格从上到下：录用率；录用次数/面试次数；95% 置信区间'+(withScores?'；HR / 业务面试官给这类人的平均分':'')+'。高亮的是这种面试方式下录用率最高的类型。</p>';}
+function ruleEstimate(rounds=200){validSel();const base=makeCtx();const cands=sel.cands.map(id=>byId(allCands(),id));const fmts=PRESET_FMTS.concat(base.fmt.custom?[base.fmt]:[]);const recs=[];
+  for(const f of fmts){const ctx=Object.assign({},base,{fmt:f,mode:'demo'});for(let s=1;s<=rounds;s++){const vs=variantsOf(cands,s*7919+13);
+    const res=vs.map(v=>{const plan=planInterview(v,f,s);return{plan,judge:demoJudge(plan,ctx)};});const d=demoDeliberate(res,ctx);
+    recs.push({fmt:{code:f.code,name:f.name},cands:res.map(r=>({arche:r.plan.cand.arche,hr:r.judge.hr.score,biz:r.judge.biz.score})),hired:d.hire==null?null:{arche:res[d.hire].plan.cand.arche}});}}
+  est={rounds,html:matrixHTML(recs,true)};renderResults();}
+async function runBatch(){
+  if(busy()||!live())return;const base=makeCtx();const cands=sel.cands.map(id=>byId(allCands(),id));
+  const rounds=Number(($('#bRounds')||{}).value)||3;const fmts=(($('#bFmts')||{}).value==='all')?PRESET_FMTS:[base.fmt];
+  Object.assign(batch,{active:true,stop:false,done:0,total:rounds*fmts.length,msg:'准备中…'});updateRunUI();renderResults();
+  const seed0=(parseInt($('#seed').value,10)||2030)*100;
+  try{
+    outer:for(const f of fmts)for(let r=0;r<rounds;r++){if(batch.stop)break outer;
+      const ctx=Object.assign({},base,{fmt:f,seed:seed0+r,mode:'live'});const vs=variantsOf(cands,ctx.seed);const results=[];
+      for(const v of vs){if(batch.stop)break outer;batch.msg=`${f.code} ${f.name} · 第 ${r+1}/${rounds} 轮 · 正在面试 ${v.name}（${v.arche}）`;renderBatchUI();
+        const plan=planInterview(v,f,ctx.seed);const beats=[];batch.ctl=new AbortController();
+        const n=await liveScript(plan,ctx,bt=>beats.push(bt),batch.ctl.signal);if(n<2)throw{code:'empty_completion'};
+        const lines=beats.map(bt=>({who:bt.who,name:bt.who==='hr'?ctx.hr.name:bt.who==='biz'?ctx.biz.name:bt.who==='cand'?v.name:'AI 工具',say:bt.say}));
+        batch.ctl=new AbortController();results.push({plan,judge:await liveJudge(plan,ctx,lines,batch.ctl.signal)});}
+      batch.msg=`${f.code} ${f.name} · 第 ${r+1}/${rounds} 轮 · 面试官在讨论`;renderBatchUI();
+      batch.ctl=new AbortController();const dec=await liveDeliberate(results,ctx,batch.ctl.signal);
+      batch.done++;record(ctx,results,dec,'claude-batch');}
+    batch.msg=batch.stop?`已停止，完成了 ${batch.done} 轮。`:`完成了 ${batch.done} 轮，结果已计入下面的统计。`;
+  }catch(e){const code=e&&e.code;batch.msg=code==='cancelled'?`已停止，完成了 ${batch.done} 轮。`:`第 ${batch.done+1} 轮中断：${errText(code)}。已完成的 ${batch.done} 轮已经记下。`;
+    if(HIDE.has(code)){state.sample=null;state.mode='demo';updateModeUI();}}
+  finally{batch.active=false;batch.ctl=null;updateRunUI();renderResults();}}
+function stopBatch(){batch.stop=true;if(batch.ctl)try{batch.ctl.abort()}catch{}}
+function renderBatchUI(){const m=$('#bMsg'),pr=$('#bProg');if(m)m.textContent=batch.msg;if(pr)pr.style.width=(batch.total?Math.round(batch.done/batch.total*100):0)+'%';}
+function batchCalls(){const r=Number(($('#bRounds')||{}).value)||3,f=(($('#bFmts')||{}).value==='all')?4:1,n=sel.cands.length;return r*f*(2*n+1);}
+function renderResults(){const el=$('#res');validSel();const R=store.results;
+  const claude=R.filter(r=>r.mode==='claude'||r.mode==='claude-batch'),demo=R.filter(r=>r.mode==='demo'||r.mode==='mixed');
+  const keepR=($('#bRounds')||{}).value||'3',keepF=($('#bFmts')||{}).value||'cur';
+  el.innerHTML=`<div class="bx"><h4>Claude 批量实验</h4>
+    <p class="note" style="margin:0">不播动画，连续跑很多轮。每一轮换一个随机种子，候选人也换成同类型的新面孔：名字不同，能力值上下浮动。这样统计出来的是“这类人”的结果，而不只是这四个人的。</p>
+    ${state.sample?`<div class="rowx"><label for="bRounds" class="att">每种方式</label><select id="bRounds">${[3,5,10,20].map(v=>`<option value="${v}" ${String(v)===keepR?'selected':''}>${v} 轮</option>`).join('')}</select>
+      <label for="bFmts" class="att">面试方式</label><select id="bFmts"><option value="cur" ${keepF==='cur'?'selected':''}>只跑当前方式</option><option value="all" ${keepF==='all'?'selected':''}>四种都跑</option></select>
+      ${batch.active?'<button class="btn small" id="bStop" type="button">停止批量</button>':`<button class="btn small primary" id="bGo" type="button" ${busy()||state.mode!=='live'?'disabled':''}>开始批量</button>`}</div>
+      <div class="att" id="bCalls">大约要调用 Claude ${batchCalls()} 次，用的是你自己的额度。${state.mode!=='live'?'先在右上角切换到“Claude 生成”。':''}</div>
+      <div class="prog"><i id="bProg" style="width:0%"></i></div><div class="att" id="bMsg"></div>`:'<p class="note" style="margin:0">需要在 claude.ai 里打开这个页面才能用。下面的规则估算随时可以跑。</p>'}</div>
+   <div class="bx"><h4>Claude 面试官的录用统计</h4>${claude.length?matrixHTML(claude,true)+'<p class="note">轮数少的时候区间很宽，看起来的差异可能只是运气。</p>':'<p class="empty">还没有 Claude 生成的记录。跑几轮面试，或者用上面的批量实验。</p>'}</div>
+   <div class="bx"><h4>规则估算</h4><p class="note" style="margin:0">只用代码里的能力值和打分公式，不调用 Claude，每种面试方式各跑 200 轮。公式是：HR 主要看自我介绍、经历问答和任务结果，业务面试官主要看专业问答、追问和陷阱；讨论时业务占六成、HR 占四成，综合分不到 58 就不录用。它显示的是这些假设本身会推出什么结论，可以拿来和 Claude 面试官的选择对照。</p>
+     <div class="rowx"><button class="btn small" id="estGo" type="button">${est?'重新估算':'跑 200 轮估算'}</button></div>${est?est.html:''}</div>
+   <div class="bx" style="border:0;margin:0;padding:0"><h4>最近几轮</h4>${R.length?`<div class="runs">${R.slice(-8).reverse().map(r=>`<div class="run"><div><b>${esc(r.fmt.code)} ${esc(r.fmt.name)}</b> · ${r.hired?'录用 '+esc(r.hired.name):'无人录用'}</div><div class="meta">${({claude:'Claude 生成',"claude-batch":'Claude 批量',demo:'演示模式',mixed:'部分用模板'})[r.mode]||''} · 种子 ${r.seed} · ${r.cands.map(c=>`${esc(c.name)} ${c.hr}/${c.biz}`).join('，')}</div></div>`).join('')}</div>
+     <div class="confirm" style="margin-top:8px">${confirmClear?'<span>确定清空全部记录？</span><button class="btn small" id="clrYes" type="button">清空</button><button class="btn small" id="clrNo" type="button">取消</button>':'<button class="btn small" id="clr" type="button">清空记录</button>'}</div>`:'<p class="empty">还没有记录。</p>'}
+     ${demo.length?`<p class="note">另有 ${demo.length} 轮演示模式或部分用了模板的记录，没有计入 Claude 统计。</p>`:''}
+     <p class="note">这是情景模拟，不是预测。结果取决于我们写进去的假设，也取决于扮演面试官的 Claude 自己的偏好，比如它可能偏爱 AI 写出来的答案。要下结论，最好再找真人 HR 看几份面试记录做对照。</p></div>`;
+  const on=(id,f)=>{const x=$('#'+id);if(x)x.onclick=f;};
+  on('bGo',runBatch);on('bStop',stopBatch);on('estGo',()=>ruleEstimate(200));
+  on('clr',()=>{confirmClear=true;renderResults();});on('clrNo',()=>{confirmClear=false;renderResults();});on('clrYes',()=>{store.results=[];confirmClear=false;save();renderResults();});
+  ['bRounds','bFmts'].forEach(id=>{const x=$('#'+id);if(x)x.onchange=()=>{const c=$('#bCalls');if(c)c.textContent=`大约要调用 Claude ${batchCalls()} 次，用的是你自己的额度。`;};});
+  renderBatchUI();}
+
+/* ---------- casting desk ---------- */
+function renderCasting(){validSel();
+  $('#fmtGrid').innerHTML=allFmts().map(f=>{const on=f.id===sel.fmt;return `<div class="card${on?' on':''}"><button type="button" class="pick" data-fmt="${f.id}" aria-pressed="${on}"><span class="row"><span class="code">${esc(f.code)}</span><span class="nm">${esc(f.name)}</span></span><span class="ds">${esc(f.desc)}</span><span class="chips"><span class="chip ${f.ai?'ai':''}">${f.ai?'允许用 AI':'不许用 AI'}</span>${f.stages.map(s=>`<span class="chip">${esc(STAGE_TYPES[s].label)}</span>`).join('')}</span></button>${f.custom?`<button type="button" class="edit" data-edit-fmt="${f.id}">编辑</button>`:''}</div>`;}).join('')+'<button type="button" class="card add" data-new="fmt">+ 设计面试方式</button>';
+  $('#seats').innerHTML=['hr','biz'].map(role=>{const it=byId(allInts(),sel[role]);return `<div class="seat"><div class="rowx hd"><b>${role==='hr'?'HR 席位':'业务席位'}</b><span class="att">${esc(ATT[String(it.aiAtt)])}</span></div>
+    <div class="rowx"><canvas width="16" height="22" data-look="int:${it.id}"></canvas><div class="who"><div class="nm">${esc(it.name)} · ${esc(it.title)}</div><div class="ds">${esc(it.persona)}</div></div></div>
+    <div class="rowx"><label class="att" for="seat-${role}">换人</label><select id="seat-${role}" data-seat="${role}">${allInts().filter(x=>x.role===role).map(o=>`<option value="${o.id}" ${o.id===it.id?'selected':''}>${esc(o.name)}（${esc(o.title)}）</option>`).join('')}</select>
+    ${it.custom?`<button class="btn small" type="button" data-edit-int="${it.id}">编辑</button>`:''}<button class="btn small" type="button" data-new="int" data-role="${role}">+ 设计面试官</button></div></div>`;}).join('');
+  $('#candGrid').innerHTML=allCands().map(c=>{const on=sel.cands.includes(c.id);return `<div class="card${on?' on':''}"><button type="button" class="pick" data-cand="${c.id}" aria-pressed="${on}"><span class="row"><canvas width="16" height="22" data-look="cand:${c.id}"></canvas><span><span class="nm">${esc(c.name)}</span><br><span class="tg">${esc(c.arche)} · ${esc(c.tagline)}</span></span></span>${bars(c.ab)}</button>${c.custom?`<button type="button" class="edit" data-edit-cand="${c.id}">编辑</button>`:''}</div>`;}).join('')+'<button type="button" class="card add" data-new="cand">+ 设计候选人</button>';
+  paintLooks($('.casting'));}
+function castingChanged(){saveSel();renderCasting();if(!busy()){view={plans:null,results:[],dec:null};resetStage();audRefresh();}renderResults();}
+$('.casting').addEventListener('click',e=>{if(busy())return;const t=e.target.closest('button');if(!t)return;const d=t.dataset;
+  if(d.fmt){sel.fmt=d.fmt;castingChanged();}
+  else if(d.cand){const i=sel.cands.indexOf(d.cand);if(i>=0){if(sel.cands.length===1){flash('至少要有一位候选人。');return;}sel.cands.splice(i,1);}else{if(sel.cands.length>=5){flash('走廊里最多坐 5 位候选人。');return;}sel.cands.push(d.cand);}castingChanged();}
+  else if(d.editFmt)openEditor('fmt',byId(allFmts(),d.editFmt));
+  else if(d.editCand)openEditor('cand',byId(allCands(),d.editCand));
+  else if(d.editInt)openEditor('int',byId(allInts(),d.editInt));
+  else if(d.new)openEditor(d.new,null,d.role);});
+$('.casting').addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.seat){sel[t.dataset.seat]=t.value;castingChanged();}});
+$('#job').addEventListener('change',e=>{sel.job=str(e.target.value,60,DEFAULT_JOB);e.target.value=sel.job;saveSel();});
+$('#jobReset').onclick=()=>{sel.job=DEFAULT_JOB;$('#job').value=sel.job;saveSel();};
+
+/* ---------- design desk (editor) ---------- */
+const edWrap=$('#editor'),ed=$('#ed');let edState=null,lastFocus=null;
+const getK=(o,k)=>k.split('.').reduce((a,x)=>a==null?a:a[x],o);
+function setK(o,k,v){const ks=k.split('.');let a=o;for(let i=0;i<ks.length-1;i++)a=a[ks[i]]=a[ks[i]]||{};a[ks[ks.length-1]]=v;}
+function lookFields(it){return `<div class="two">
+  <div class="f"><label for="edSkin">肤色</label><select id="edSkin" data-k="look.skin" data-num="1">${SKIN_LABEL.map((l,i)=>`<option value="${i}" ${it.look.skin===i?'selected':''}>${l}</option>`).join('')}</select></div>
+  <div class="f"><label for="edHair">发色</label><select id="edHair" data-k="look.hair">${Object.keys(HAIR).map(k=>`<option value="${k}" ${it.look.hair===k?'selected':''}>${HAIR_LABEL[k]}</option>`).join('')}</select></div>
+  <div class="f"><label for="edStyle">发型</label><select id="edStyle" data-k="look.style">${STYLES.map(k=>`<option value="${k}" ${it.look.style===k?'selected':''}>${STYLE_LABEL[k]}</option>`).join('')}</select></div>
+  <div class="f"><label for="edShirt">上衣颜色</label><input id="edShirt" type="color" data-k="look.shirt" value="${it.look.shirt}"></div>
+  <div class="f"><label><input id="edGlasses" type="checkbox" data-k="look.glasses" data-bool="1" ${it.look.glasses?'checked':''}> 戴眼镜</label></div></div>`;}
+function slider(id,label,k,v,min=0,max=100){return `<div class="sl"><label for="${id}">${label}</label><input id="${id}" type="range" min="${min}" max="${max}" step="1" value="${v}" data-k="${k}" data-num="1"><output for="${id}">${v}</output></div>`;}
+function fieldsHTML(kind,it){
+  if(kind==='cand')return `<div class="preview"><canvas id="edPv" width="16" height="30"></canvas><div class="two" style="flex:1"><div class="f"><label for="edName">名字</label><input id="edName" type="text" maxlength="8" data-k="name" value="${esc(it.name)}"></div><div class="f"><label for="edArche">类型标签</label><input id="edArche" type="text" maxlength="6" data-k="arche" value="${esc(it.arche)}"></div></div></div>
+    <div class="f"><label for="edTag">一句话标签</label><input id="edTag" type="text" maxlength="20" data-k="tagline" value="${esc(it.tagline)}"></div>
+    <div class="f"><label for="edBio">背景</label><textarea id="edBio" maxlength="80" data-k="bio">${esc(it.bio)}</textarea></div>
+    ${slider('edK','专业知识','ab.knowledge',it.ab.knowledge)}${slider('edA','用 AI 的本事','ab.ai',it.ab.ai)}${slider('edE','表达能力','ab.expression',it.ab.expression)}${slider('edH','诚实度','ab.honesty',it.ab.honesty)}${slider('edN','紧张程度','ab.nerves',it.ab.nerves)}
+    ${lookFields(it)}`;
+  if(kind==='int')return `<div class="preview"><canvas id="edPv" width="16" height="30"></canvas><div class="two" style="flex:1"><div class="f"><label for="edName">名字</label><input id="edName" type="text" maxlength="8" data-k="name" value="${esc(it.name)}"></div><div class="f"><label for="edTitle">职位</label><input id="edTitle" type="text" maxlength="12" data-k="title" value="${esc(it.title)}"></div></div></div>
+    <div class="two"><div class="f"><label for="edRole">坐哪个席位</label><select id="edRole" data-k="role"><option value="hr" ${it.role==='hr'?'selected':''}>HR 席位：问经历和沟通</option><option value="biz" ${it.role==='biz'?'selected':''}>业务席位：问专业问题</option></select></div>
+    <div class="f"><label for="edTag">一句话标签</label><input id="edTag" type="text" maxlength="20" data-k="tagline" value="${esc(it.tagline)}"></div></div>
+    <div class="f"><label for="edPersona">性格和提问风格</label><textarea id="edPersona" maxlength="80" data-k="persona">${esc(it.persona)}</textarea></div>
+    <div class="f"><label for="edValues">最看重什么</label><input id="edValues" type="text" maxlength="40" data-k="values" value="${esc(it.values)}"></div>
+    <div class="sl"><label for="edAtt">对 AI 的态度</label><input id="edAtt" type="range" min="-2" max="2" step="1" value="${it.aiAtt}" data-k="aiAtt" data-num="1"><output for="edAtt">${it.aiAtt}</output></div><div class="att" id="edAttTx">${esc(ATT[String(it.aiAtt)])}</div>
+    ${lookFields(it)}`;
+  return `<div class="two"><div class="f"><label for="edCode">代号（一个字母）</label><input id="edCode" type="text" maxlength="1" data-k="code" value="${esc(it.code)}"></div><div class="f"><label for="edName">名字</label><input id="edName" type="text" maxlength="10" data-k="name" value="${esc(it.name)}"></div></div>
+    <div class="f"><label for="edDescF">说明</label><textarea id="edDescF" maxlength="60" data-k="desc">${esc(it.desc)}</textarea></div>
+    <div class="f"><label><input id="edAI" type="checkbox" data-k="ai" data-bool="1" ${it.ai?'checked':''}> 允许候选人用 AI</label></div>
+    <div class="f"><label>面试环节，按顺序进行，最多 8 个</label><div class="stagelist" id="edStages">${it.stages.map((s,i)=>`<span class="chip">${i+1}. ${esc(STAGE_TYPES[s].label)}<button type="button" data-rm="${i}" aria-label="删掉${esc(STAGE_TYPES[s].label)}">×</button></span>`).join('')}</div>
+    <div class="rowx" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><select id="edAddSel" aria-label="要添加的环节">${Object.entries(STAGE_TYPES).map(([k,v])=>`<option value="${k}">${esc(v.label)}</option>`).join('')}</select><button class="btn small" type="button" id="edAddStage" ${it.stages.length>=8?'disabled':''}>添加环节</button></div></div>`;}
+function paintFields(){const {kind,it}=edState;$('#edFields').innerHTML=fieldsHTML(kind,it);const pv=$('#edPv');if(pv)drawPortrait(pv,it.look,true);
+  $$('#edFields [data-k]').forEach(inp=>{const ev=inp.type==='range'||inp.tagName==='TEXTAREA'||inp.type==='text'||inp.type==='color'?'input':'change';
+    inp.addEventListener(ev,()=>{let v=inp.dataset.bool?inp.checked:inp.value;if(inp.dataset.num)v=Number(v);setK(it,inp.dataset.k,v);
+      const out=inp.parentElement.querySelector('output');if(out)out.textContent=v;if(inp.id==='edAtt')$('#edAttTx').textContent=ATT[String(v)];
+      if(inp.dataset.k.startsWith('look.')){const p=$('#edPv');if(p)drawPortrait(p,it.look,true);}});});
+  $$('#edStages [data-rm]').forEach(bn=>bn.onclick=()=>{it.stages.splice(Number(bn.dataset.rm),1);paintFields();});
+  const add=$('#edAddStage');if(add)add.onclick=()=>{if(it.stages.length<8){it.stages.push($('#edAddSel').value);paintFields();}};}
+function openEditor(kind,item,role){if(busy())return;lastFocus=document.activeElement;
+  const fresh={cand:()=>normCand({name:'',arche:'自定义',ab:{knowledge:60,ai:60,expression:60,honesty:60,nerves:40},look:{skin:1,hair:'black',style:'short',shirt:'#4A6FA5'}}),
+    int:()=>normInt({role:role||'hr',name:'',aiAtt:0,look:{skin:0,hair:'brown',style:'short',shirt:'#5B6B7F',glasses:false}}),
+    fmt:()=>normFmt({code:'E',name:'',ai:true,stages:['intro','task','followup','closing']})}[kind];
+  const it=item?JSON.parse(JSON.stringify(item)):fresh();if(!item){it.name='';}
+  edState={kind,it,orig:item,del:false};
+  const T={cand:'设计候选人',int:'设计面试官',fmt:'设计面试方式'}[kind];
+  const ph={cand:'比如：专业很强，但一紧张就说不出话的转专业学生',int:'比如：非常反感 AI、只相信手写推导的老派技术总监',fmt:'比如：先和 AI 一起完成任务，再关掉 AI 现场改错'}[kind];
+  ed.innerHTML=`<h2 id="edTitle">${T}${item&&!item.custom?'（复制一份再改）':''}</h2>
+    ${state.sample?`<div class="gen"><label for="edDesc">用一句话描述，让 Claude 帮你填好下面的表</label><textarea id="edDesc" placeholder="${esc(ph)}"></textarea><div class="acts" style="justify-content:flex-start;align-items:center"><button class="btn primary small" id="edGen" type="button">让 Claude 设计</button><span class="att" id="edGenMsg"></span></div></div>`:'<p class="note" style="margin:0">现在需要手动填写。在 claude.ai 里打开这个页面，就可以用一句话让 Claude 来设计。</p>'}
+    <div id="edFields"></div><div class="err" id="edErr"></div>
+    <div class="acts">${item&&item.custom?'<button class="btn" id="edDel" type="button">删除</button>':''}<button class="btn" id="edCancel" type="button">取消</button><button class="btn primary" id="edSave" type="button">保存</button></div>`;
+  paintFields();edWrap.hidden=false;
+  const gen=$('#edGen');if(gen)gen.onclick=async()=>{const d=str($('#edDesc').value,200);const msg=$('#edGenMsg');if(!d){msg.textContent='先写一句描述。';return;}
+    gen.disabled=true;msg.textContent='Claude 正在设计…';
+    try{const o=await state.sample.json(GEN[kind](d,sel.job),{modelTier:'quick',cache:false});const keep=edState.it.id;
+      const n=kind==='cand'?normCand(Object.assign({},o,{arche:edState.it.arche||'自定义'})):kind==='int'?normInt(o):normFmt(o);n.id=keep;edState.it=n;paintFields();msg.textContent='填好了，可以再手动调整。';}
+    catch(e){msg.textContent=errText(e&&e.code)+'。';if(e&&HIDE.has(e.code)){state.sample=null;state.mode='demo';updateModeUI();}}
+    finally{gen.disabled=false;}};
+  $('#edCancel').onclick=closeEditor;
+  $('#edSave').onclick=()=>{const {kind,it,orig}=edState;if(!str(it.name,10)){$('#edErr').textContent='请给它起个名字。';return;}
+    const list=store.customs[kind];const editing=orig&&orig.custom;const norm=(kind==='cand'?normCand:kind==='int'?normInt:normFmt)(Object.assign({},it,editing?{}:{id:undefined}));
+    if(editing){norm.id=orig.id;const i=list.findIndex(x=>x.id===orig.id);if(i>=0)list[i]=norm;else list.push(norm);}else list.push(norm);
+    if(kind==='cand'){if(!sel.cands.includes(norm.id)){if(sel.cands.length>=5)sel.cands.pop();sel.cands.push(norm.id);}}
+    else if(kind==='int')sel[norm.role]=norm.id;else sel.fmt=norm.id;
+    save();closeEditor();castingChanged();flash(`已保存“${norm.name}”。`);};
+  const del=$('#edDel');if(del)del.onclick=()=>{if(!edState.del){edState.del=true;del.textContent='再点一次确认删除';return;}
+    const {kind,orig}=edState;store.customs[kind]=store.customs[kind].filter(x=>x.id!==orig.id);sel.cands=sel.cands.filter(id=>id!==orig.id);save();closeEditor();castingChanged();};
+  setTimeout(()=>{const f=$('#edDesc')||$('#edName');if(f)f.focus();},0);}
+function closeEditor(){edWrap.hidden=true;ed.innerHTML='';edState=null;if(lastFocus&&lastFocus.focus)try{lastFocus.focus()}catch{}}
+edWrap.addEventListener('click',e=>{if(e.target===edWrap)closeEditor();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!edWrap.hidden)closeEditor();});
+
+/* ---------- controls, mode, tabs ---------- */
+function updateModeUI(){const L=$('#modeLive'),D=$('#modeDemo');L.disabled=!state.sample||busy();D.disabled=busy();
+  L.setAttribute('aria-pressed',String(state.mode==='live'));D.setAttribute('aria-pressed',String(state.mode==='demo'));
+  $('#modeHint').textContent=!state.claudeKnown?'正在连接 Claude…':state.sample?(state.mode==='live'?'台词和评价由 Claude 实时生成，用的是你自己的 Claude 额度。第一次开始时会请你授权。':'演示模式：台词来自写好的模板，评价用固定公式，不调用 Claude。'):'演示模式：台词来自写好的模板。在 claude.ai 里打开这个页面，就能让 Claude 生成台词。';}
+function updateRunUI(){const b=busy();$('#btnStart').disabled=b;$('#startHintBtn').disabled=b;$('#btnPause').disabled=!state.running;$('#btnStop').disabled=!state.running;
+  if(!state.running)$('#btnPause').textContent='暂停';$('.casting').inert=b;const bg=$('#bGo');if(bg)bg.disabled=b||state.mode!=='live';updateModeUI();}
+$('#modeLive').onclick=()=>{if(state.sample&&!busy()){state.mode='live';updateModeUI();renderResults();}};
+$('#modeDemo').onclick=()=>{if(!busy()){state.mode='demo';updateModeUI();renderResults();}};
+$('#btnStart').onclick=startRun;$('#startHintBtn').onclick=startRun;$('#btnPause').onclick=togglePause;$('#btnStop').onclick=stopRun;
+$('#btnDice').onclick=()=>{$('#seed').value=String(1000+Math.floor(Math.random()*9000));};
+$$('#speed button').forEach(bn=>bn.onclick=()=>{state.speed=Number(bn.dataset.speed);$$('#speed button').forEach(x=>x.setAttribute('aria-pressed',String(x===bn)));});
+const TABS=[['tabLog','paneLog'],['tabAud','paneAud'],['tabRes','paneRes']];
+TABS.forEach(([t,p])=>$('#'+t).onclick=()=>{TABS.forEach(([t2,p2])=>{$('#'+t2).setAttribute('aria-selected',String(t2===t));$('#'+p2).hidden=t2!==t;});if(p==='paneLog')scrollLog();});
+async function initClaude(){let s=null;try{if(window.claude&&typeof window.claude.use==='function')s=await window.claude.use('sample');}catch{s=null;}
+  state.claudeKnown=true;state.sample=s||null;if(state.sample&&!busy())state.mode='live';updateModeUI();renderResults();}
+
+/* ---------- boot ---------- */
+buildBackground();buildForeground();validSel();$('#job').value=sel.job;renderCasting();resetStage();audRefresh();renderResults();updateRunUI();
+requestAnimationFrame(loop);initClaude();
+})();
+</script>
