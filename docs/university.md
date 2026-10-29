@@ -1,116 +1,116 @@
-# 研究版本一：AI 时代的大学会变成什么样
+# Study 1: What will universities become in the age of AI?
 
-研究对象：大学生、老师，以及来校园招聘的雇主。
+Who: university students, professors, and the employers who recruit on campus.
 
-通用的方法原则和风险见 [README](../README.md)。
-
----
-
-## 1. 核心问题
-
-> 在 AI 随便用、禁也禁不住的前提下，大学最后会变成什么？
-> 当作业和成绩不再能证明一个人的能力，学生、老师和雇主靠什么互相信任？
-
-为什么选这个问题：
-
-- **它把大学和招聘串成一条链。** 作业 → 成绩 → 简历 → 录用。AI 打断的是这条链的第一环，后面每一环都会跟着变。
-- **前提几乎已经成立。** AI 已经能完成大部分课程作业，检测也不可靠，大学也不可能全面禁用。不确定的是人和制度怎么反应，这正是智能体模拟擅长的部分。
-- **两种结果都有意思。** 可能是"面对面的真本事更值钱"，也可能是"人脉比能力更值钱"。
+Shared method and risks are in the [README](../README.md).
 
 ---
 
-## 2. 我们的猜想：大学的三种结局
+## 1. Core question
 
-大学今天同时打包了四件事：
+> If students use AI freely and banning it does not work, what does a university eventually become?
+> When assignments and grades no longer prove what someone can do, what do students, professors and employers rely on to trust each other?
 
-1. 传授知识
-2. 替雇主做认证和筛选
-3. 提供人际网络：老师、同学、校友
-4. 给年轻人一个可以试错的过渡期
+Why this question:
 
-AI 最先拆掉的是第一件，接着动摇第二件。第三、第四件 AI 替代不了，会变得相对更值钱。剩下的部分重新组合，大致有三种结局：
+- **It links university to hiring.** Assignments, then grades, then a résumé, then an offer. AI breaks the first link, and every later link moves with it.
+- **The premise is already nearly true.** AI can complete most coursework, detection is unreliable, and universities cannot ban it outright. What is uncertain is how people and institutions respond, which is what agent simulation is good at.
+- **Both possible results are interesting.** It may turn out that real, in-person skill becomes more valuable, or that connections become more valuable than ability.
 
-| 结局 | 大学主要做什么 | 学生怎么学 | 雇主看什么 |
+---
+
+## 2. Our hypothesis: three possible end states
+
+Today a university bundles four things:
+
+1. Teaching knowledge
+2. Certifying and screening for employers
+3. A network of professors, classmates and alumni
+4. A safe place for young people to try things and fail
+
+AI unbundles the first one first, then shakes the second. The third and fourth cannot be replaced by AI and become relatively more valuable. The remaining pieces recombine into roughly three end states:
+
+| End state | What the university mainly does | How students learn | What employers look at |
 |---|---|---|---|
-| **考证中心** | 只负责监考和认证 | 跟 AI 自学，来学校只为考试 | 现场考试成绩、证书 |
-| **学徒工坊** | 带学生做真实项目，常和企业合作 | 小组做项目，教授当教练 | 作品、项目表现、导师推荐 |
-| **照旧** | 上课和作业形式不变，AI 随便用 | 作业交给 AI，课堂形同虚设 | 成绩失灵，转看实习和人脉 |
+| **Testing center** | Proctors exams and issues credentials | Self-study with AI; come to campus only for exams | In-person exam results, certificates |
+| **Apprentice workshop** | Runs real projects, often with companies | Small project teams with professors as coaches | Portfolio, project performance, mentor references |
+| **Business as usual** | Same lectures and assignments; AI used freely | AI does the assignments; class becomes a formality | Grades stop working; internships and connections take over |
 
-不同层次的大学可能走向不同结局。名校更可能变成"人脉俱乐部加学徒工坊"，普通大学更可能变成"考证中心"。如果真是这样，AI 可能会拉大而不是缩小大学之间的差距。这是要用模拟检验的。
+Different tiers of universities may end up in different places. Elite schools may become "network clubs plus workshops" while ordinary schools become testing centers. If so, AI would widen rather than narrow the gap between universities. That is what the simulation should test.
 
-**模拟能回答什么、不能回答什么：** 它回答不了"大学会选哪种结局"，那是几十年的制度演化。它回答的是"如果大学变成某种结局，人在里面怎么相处、谁受益、雇主认不认"。
+**What the simulation can and cannot answer:** it cannot say which end state universities will choose; that is decades of institutional change. It can say how people get along inside each end state, who benefits, and whether employers accept the result.
 
 ---
 
-## 3. 时间设定
+## 3. Time settings
 
-两种"时间"要分开：
+Two kinds of "time" must be kept apart:
 
-| | 设定 | 理由 |
+| | Setting | Reason |
 |---|---|---|
-| 模拟内部跑多久 | 一个学期，约 15 周 | 学期有开学、期中、期末、秋招这些天然节点。跑太久，智能体的人设会漂移，成本也线性增加。 |
-| 模拟的是哪一年 | 2029 年秋季学期 | 2026 年秋入学的新生那时读大四，正赶上秋招。5 年内 AI 的能力还能合理假设，更远的结果基本只是假设本身。 |
+| How long the simulation runs | One semester, about 15 weeks | A semester has natural milestones: start, midterms, finals, recruiting season. Run longer and agent personas drift, while cost grows linearly. |
+| Which year is simulated | Fall semester 2029 | Students who started in fall 2026 are seniors, right in recruiting season. Within about five years AI capability can still be assumed sensibly; further out, the result is mostly the assumption itself. |
 
-不连续往后跑十年，而是做**快照**：设定好某一年的世界，跑一个学期。想看更远，就换一组参数做 2035 年快照，把它当作有结构的科幻，而不是预测。
-
----
-
-## 4. 实验一：回测 2023 年春季学期
-
-**世界：** 2022 年秋天的一所普通大学。12 月注入一个"能写任何作业的聊天工具"，然后模拟 2023 年春季学期。这一轮正好覆盖"禁用"阶段，因为 2023 年初很多学校确实先试过禁用。
-
-**对照公开报道过的变化：**
-
-- 学生很快、很普遍地用起来，远早于学校出台规则。
-- 学校从"一刀切禁止"转向"每门课自定规则"。
-- 课堂手写考试、口试回潮。
-- AI 检测工具误判多，非母语学生更容易被冤枉。
-- 老师开始怀疑写得太好的作业，师生信任下降。
-
-**注意：** 模型的训练数据里有 2023 年的新闻，它可能是"记得"结果，而不是"推演"出结果。所以回测通过只算及格线，不算证明。更有价值的是看它给出的过程和机制是否合理。
+Instead of running ten years continuously, we take **snapshots**: set up the world of a given year and run one semester. To look further, build a 2035 snapshot with different parameters and treat it as structured science fiction, not a forecast.
 
 ---
 
-## 5. 实验二：2029 年秋季学期的三种大学
+## 4. Experiment 1: replay spring 2023
 
-**共享的世界规则：**
+**World:** an ordinary university in fall 2022. In December, a chat tool that can write any assignment appears, and we simulate the spring 2023 semester. This round also covers the "ban it" phase, since many universities did try bans in early 2023.
 
-- AI 能完成绝大多数课程作业，检测不可靠，学校不禁用。每个学生都有一个 AI 助手，用不用、怎么用由学生自己决定。
-- 初级岗位比今天少。具体减少多少作为参数，做敏感性分析。
-- 学期最后两周是秋招，雇主智能体要从学生里挑人。
+**Compare with publicly reported changes:**
 
-**三种条件 = 三种结局：** 考证中心、学徒工坊、照旧。除了大学形态，其他全部相同：同一批人设、同一组随机种子。
+- Students adopted the tool quickly and widely, well before universities had rules.
+- Universities moved from blanket bans to course-by-course policies.
+- Handwritten in-class exams and oral exams came back.
+- AI detectors produced many false positives, and non-native English speakers were wrongly accused more often.
+- Professors grew suspicious of polished writing, and trust between students and professors fell.
 
-**人物（试点约 12 个）：**
-
-- **学生 8 人。** 在这几个维度上拉开差异：第一代大学生还是家里有人脉；母语还是非母语；能力强弱；外向还是内向；对 AI 的态度。
-- **教授 2 人。** 一个拥抱技术，一个怀疑技术。
-- **助教 1 人。**
-- **雇主 1 到 2 人。** 学期末秋招时出场。
-
-**观测指标：**
-
-- **信任：** 师生之间、同学之间的信任变化。来源是智能体每周自评，加上行为记录：求助、合作、举报。
-- **互动：** 和人交流的时间与只和 AI 交流的时间之比；学习小组变多还是变少。
-- **证明：** 学生用什么证明自己，比如成绩、作品、推荐、关系；雇主最终凭什么做决定。
-- **结果：** 谁拿到录用，谁掉队；这些结果和学生初始条件（人脉、母语、能力）的关系。
+**Caution:** the model was trained on 2023 news, so it may "remember" the outcome rather than reason its way there. Passing the replay is a minimum bar, not proof. What matters more is whether the process and mechanisms it shows are plausible.
 
 ---
 
-## 6. 跑之前写下的预期
+## 5. Experiment 2: three universities in fall 2029
 
-- **考证中心：** 师生几乎没有互动，同学之间也很少来往。考试成绩重新有了信号，但雇主仍然嫌它看不出真实能力。
-- **学徒工坊：** 互动最密，雇主最认。但好项目和导师精力有限，外向、自信、母语的学生更容易拿到。
-- **照旧：** 成绩全面膨胀，雇主不信成绩，转看实习和推荐，家里有人脉的学生胜出。
-- **共同预期：** 三种大学里，"有人能为你担保"都会变得更值钱。区别只在于这种担保对谁更容易获得。
+**Shared world rules:**
 
-模拟结果和这些预期不一样的地方，才是最值得看的地方。
+- AI can complete nearly all coursework, detection is unreliable, and the university does not ban it. Every student has an AI assistant and decides whether and how to use it.
+- There are fewer entry-level jobs than today. How many fewer is a parameter for sensitivity analysis.
+- The last two weeks of the semester are recruiting season, and employer agents choose among the students.
+
+**Three conditions, three end states:** testing center, apprentice workshop, business as usual. Everything else is identical: the same personas and the same random seeds.
+
+**Cast (pilot of about 12):**
+
+- **8 students**, deliberately varied: first-generation or well connected; native or non-native speaker; strong or weak; outgoing or shy; attitude toward AI.
+- **2 professors**: one embraces technology, one is skeptical.
+- **1 teaching assistant.**
+- **1 or 2 employers**, who appear for recruiting at the end of the semester.
+
+**Measures:**
+
+- **Trust:** between students and professors and among students, from weekly self-reports plus behavior: asking for help, collaborating, reporting.
+- **Interaction:** time spent with people versus only with AI; whether study groups grow or shrink.
+- **Proof:** how students prove themselves (grades, portfolio, references, connections) and what employers finally decide on.
+- **Outcomes:** who gets an offer and who falls behind, and how that relates to their starting point (connections, language, ability).
 
 ---
 
-## 7. 路线图
+## 6. Predictions written before running
 
-1. **试点：** 约 12 个智能体，模拟 1 周，只用"照旧"一种条件，把流程跑通。
-2. **回测：** 实验一。
-3. **正式实验：** 实验二，三种结局，每种跑多个随机种子。
-4. **之后：** 扩大人数，加 2035 年快照，做可视化。
+- **Testing center:** almost no interaction between students and professors, and little among students. Exam results regain some signal, but employers still doubt they show real ability.
+- **Apprentice workshop:** the most interaction and the most trusted by employers. But good projects and mentor time are scarce, and outgoing, confident native speakers get more of them.
+- **Business as usual:** grades inflate across the board; employers stop trusting them and turn to internships and references, and well-connected students win.
+- **Overall:** in all three, "someone who can vouch for you" becomes more valuable. The difference is who finds it easy to get.
+
+Where the simulation disagrees with these predictions is where it is most worth looking.
+
+---
+
+## 7. Roadmap
+
+1. **Pilot:** about 12 agents, one week, business-as-usual only, to get the loop running.
+2. **Replay:** Experiment 1.
+3. **Main experiment:** Experiment 2, three end states, several seeds each.
+4. **Later:** more agents, a 2035 snapshot, visualization.

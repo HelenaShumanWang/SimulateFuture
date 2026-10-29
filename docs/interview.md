@@ -1,157 +1,173 @@
-# 研究版本三：AI 时代的面试
+# Study 3: Job interviews in the age of AI
 
-研究对象：求职的学生，以及面试他们的 HR 和业务面试官。视角站在**求职者**这边。
+Who: students looking for jobs, and the HR and technical interviewers who meet them. The point of view is the **candidate's**.
 
-通用的方法原则和风险见 [README](../README.md)。
-
----
-
-## 1. 核心问题
-
-> 2030 年找工作，一个专业知识扎实的学生，和一个专业一般但很会用 AI 解决问题的学生，谁更容易被录用？换一种面试方式，结果会不会反转？
-
-更深一层：当 AI 能帮人答题，面试官还看得出谁真的会吗？
-
-对学生来说，这直接回答"我该把时间花在学专业，还是练用 AI"。对大学来说，它回答"该教什么"。
+Shared method and risks are in the [README](../README.md).
 
 ---
 
-## 2. 现实已经走到这一步
+## 1. Core question
 
-- **Canva：** 2025 年起要求工程岗候选人在技术面试中使用 Copilot、Cursor、Claude 等 AI 工具。理由是候选人反正都在偷偷用，而且很难检测。见 [The Register 的报道](https://www.theregister.com/2025/06/11/canva_coding_assistant_job_interviews/)。
-- **Meta：** 2025 年试点允许候选人使用 AI 助手的编程面试，理由是更接近真实工作环境。见 [YourStory 的报道](https://yourstory.com/ai-story/meta-ai-job-interviews-hiring-pilot-2025)。
-- **没有共识：** 也有评论认为，这类面试和传统面试考的可能根本不是同一种能力。这正是模拟可以帮忙看清的地方。
+> In 2030, a student with deep subject knowledge and a student who is average at the subject but great at solving problems with AI apply for the same job. Who is more likely to get the offer? Does the answer flip with a different interview format?
 
----
+One level deeper: when AI can answer for you, can interviewers still tell who actually knows the material?
 
-## 3. 为什么面试特别适合用智能体模拟
-
-- **面试本身就是对话**，这是大模型最擅长的。
-- **场景小：** 一个房间、几个人、一小时。不需要整个小镇。
-- **便宜：** 一场面试几十次模型调用，可以重复跑几百场，看录用率的分布，而不是看一场的运气。
-- **时间问题消失了：** 不需要往后预测很多年，只模拟 2030 年秋招里的一场面试。
+For a student, this answers "should I spend my time on the subject, or on getting good with AI?" For a university, it answers "what should we teach?"
 
 ---
 
-## 4. 人物
+## 2. The real world is already here
 
-**候选人：四种原型**，每种可以生成多个不同人设的变体。
-
-| 原型 | 专业知识 | 用 AI 的本事 | 表达能力 |
-|---|---|---|---|
-| **知识型** | 强 | 弱 | 中 |
-| **AI 型** | 弱 | 强 | 中 |
-| **结合型** | 强 | 强 | 中 |
-| **表达型** | 中 | 中 | 强 |
-
-加"表达型"是为了检验一个更扎心的可能：面试的赢家也许既不是最懂的，也不是最会用 AI 的，而是最会说的。
-
-每个候选人还有两个隐藏特质：**诚实度**，决定会不会隐瞒自己用了 AI；**紧张程度**，影响临场发挥。
-
-**面试官：**
-
-- **HR：** 不懂技术细节，看沟通、态度和"问题有没有解决"。HR 对候选人用 AI 的态度作为参数：反感、中立、欣赏。
-- **业务面试官：** 懂专业，会追问细节。
-- 最终录用由两人讨论决定。两人的分歧本身就是重要的观测对象。
+- **Canva:** since 2025, candidates for engineering roles are expected to use AI tools such as Copilot, Cursor and Claude in technical interviews, partly because candidates were using them covertly anyway. See [The Register](https://www.theregister.com/2025/06/11/canva_coding_assistant_job_interviews/).
+- **Meta:** in 2025, Meta piloted coding interviews where candidates have an AI assistant, to match the real work environment. See [YourStory](https://yourstory.com/ai-story/meta-ai-job-interviews-hiring-pilot-2025).
+- **No consensus:** commentators point out that these interviews may not measure the same skill as traditional ones. That is exactly what a simulation can help untangle.
 
 ---
 
-## 5. 机制：模型演对话，代码定结果
+## 3. Why interviews suit agent simulation
 
-大模型本身什么都会。让它扮演"专业一般"的学生，它照样答得很好。所以要把"会不会"和"怎么说"分开：
-
-- **隐藏能力值。** 每个候选人有专业知识、用 AI 的本事、表达、诚实度几个数值。
-- **代码判定任务结果。** 每道题做到什么程度，由代码根据能力值和面试规则算出来，再告诉候选人智能体"你这一题做到了这个程度"，让它把结果演成对话。
-- **AI 型候选人真的用 AI。** 在允许用 AI 的环节，候选人智能体会真的调用一个 AI 工具。他可以把 AI 的答案交上去，但被追问"为什么"时能不能讲清楚，取决于他自己的专业知识。
-- **面试官只看得到对话。** 面试官看不到隐藏能力值，只能根据对话记录做判断，就像真实面试一样。
+- **An interview is a conversation**, which is what language models do best.
+- **The scene is small:** one room, a few people, an hour. No whole town needed.
+- **It is cheap:** an interview takes a handful of model calls, so it can be repeated many times to see a distribution rather than one lucky draw.
+- **No long horizon:** we do not forecast years ahead; we simulate one interview day in fall 2030.
 
 ---
 
-## 6. 实验：只改面试方式
+## 4. Cast
 
-同一批候选人、同一组面试官，只改面试方式：
+**Candidates.** Six presets. Each can be varied into many versions for batch runs.
 
-- **A 传统面试：** 问专业问题，不许用 AI。
-- **B 开卷实战：** 给一个真实的工作任务，允许用 AI，限时完成。
-- **C 开卷加追问：** 允许用 AI 完成任务，然后追问"为什么这样做""条件变了怎么办"。
-- **D 带陷阱的任务：** 任务里埋一个 AI 会答错、但看起来很对的地方，只有懂行的人能发现。
+| Type | Knowledge | AI skill | Speaking | Why it is here |
+|---|---|---|---|---|
+| **Knowledge** | high | low | middling | The classic strong student |
+| **AI-savvy** | low | high | middling | The scenario this study started from |
+| **Both** | high | high | middling | The obvious favorite |
+| **Articulate** | middling | middling | high | Tests whether the best talker wins |
+| **Quiet builder** | lowish | high | low | Great with AI, bad at explaining it |
+| **Smooth talker** | low | low | very high | Great at talking, weak on the work |
 
-**可选延伸：三个月试用期。** 给被录用的人一串工作任务，其中一部分 AI 搞不定，看面试时的判断准不准。
+Each candidate also has two hidden traits: **honesty**, which decides whether they hide their AI use, and **nerves**, which hurts performance on the day.
 
-**观测指标：**
+**Identity.** Users can give a candidate pronouns, an age, a background, a first language, an education level, first-generation status and other details, plus an appearance: skin tone, hair, headwear such as a hijab, and clothing. Identity reaches the interviewers only when the casting desk says interviewers can see who the candidate is. With that switch off, the interview is blind and interviewers judge the transcript alone.
 
-- **录用率：** 每种候选人在每种面试方式下被录用的比例。
-- **分歧：** HR 和业务面试官想要的是不是同一个人。
-- **理由：** 面试官自己说看重什么，和实际决定是否一致。
-- **隐瞒：** 候选人有没有隐瞒用了 AI；被发现以后，面试官怎么反应。
-- **试用期（可选）：** 面试排名和实际工作表现的吻合程度。
+**Interviewers.**
 
----
-
-## 7. 跑之前写下的预期
-
-- **A 传统面试：** 知识型胜。
-- **B 开卷实战：** AI 型胜，HR 尤其偏爱他。这就是最初设想的那个场景。
-- **C 开卷加追问：** 结合型胜。AI 型在追问里露馅；知识型做得慢、吃点亏，但在追问里扳回来。
-- **D 带陷阱的任务：** 知识型和结合型胜。AI 型交出一个看起来完美、其实错了的答案。
-- **表达型：** 在 HR 面前每种方式都占便宜，在业务面试官面前优势消失。
-- **共同预期：** 最终赢家是结合型，这不意外。真正有信息量的是：两种"单项"候选人之间谁输得更惨，以及 HR 和业务面试官的分歧有多大。
-
-模拟结果和这些预期不一样的地方，才是最值得看的地方。
+- **HR seat:** not technical; looks at communication, attitude and whether the problem got solved. Their attitude to candidates using AI is a setting from "strongly dislikes" to "sees it as essential".
+- **Technical seat:** knows the subject and probes the details.
+- The two decide together. Their disagreement is a result in its own right.
 
 ---
 
-## 8. 一个必须处理的偏差：AI 偏爱 AI
+## 5. Mechanism: the model acts, code decides
 
-面试官也是大模型扮演的。研究发现，大模型当评委时会偏爱自己生成的文字，即使人类觉得质量一样。见 Panickssery、Bowman、Feng，[LLM Evaluators Recognize and Favor Their Own Generations](https://neurips.cc/virtual/2024/oral/97998)，NeurIPS 2024。
+A language model knows everything. Asked to play an "average" student, it still answers well. So "can they do it" and "how do they say it" are separated:
 
-在这个实验里，这会让 AI 面试官天然偏爱 AI 型候选人交上来的答案，恰好偏向我们想检验的结论。不处理它，结论就不可信。
-
-**对策：**
-
-- 面试官和候选人手里的 AI 工具用不同的模型。
-- 面试官的偏好写进人设，不让模型自由发挥。
-- **最重要的一步：真人校准。** 找真人 HR 或有招聘经验的人，盲评模拟出来的面试记录，让他们选人，再和 AI 面试官的选择对比。吻合度高，AI 面试官才可信。
+- **Hidden ability scores.** Knowledge, AI skill, speaking, honesty and nerves.
+- **Code decides each step's outcome.** How well each step goes is computed from the scores and the interview rules. The model is told "this step went at this level" and acts it out.
+- **The AI-savvy candidate really uses AI.** In steps where AI is allowed, the dialogue includes the AI tool's answer. Whether the candidate can explain it under follow-up questions depends on their own knowledge.
+- **Interviewers only see what interviewers would see.** They never see the ability scores or the candidate's screen. Dialogue and judgment are separate model calls.
 
 ---
 
-## 9. 怎么验证
+## 6. Experiment: change only the interview format
 
-- **真人盲评：** 把 10 到 20 份面试记录交给真人评审，不告诉他们候选人是哪种原型。
-- **真人上场：** 你自己或同学扮演候选人，和 AI 面试官面一场，看它的判断和你自己的感觉是否一致。这一步也可以直接做成课堂演示。
+Same candidates, same interviewers, only the format changes:
+
+- **A Classic:** technical questions only, no AI.
+- **B Open book:** a real work task, AI allowed, time-boxed.
+- **C Open book + probing:** AI allowed for the task, then "why this way?" and "what if things change?"
+- **D Trap task:** the material hides a problem that AI tends to miss but that looks fine at a glance.
+
+**Measures:**
+
+- **Offer rate** for each type of candidate under each format.
+- **Disagreement:** whether HR and the technical interviewer want the same person.
+- **Reasons:** what the interviewers say they value, and whether it matches what they decide.
+- **Hiding:** whether candidates conceal their AI use, and how interviewers react when they find out.
+- **Identity effects:** for audit-style pairs of candidates who differ in one identity detail, whether offer rates differ, with identity visible versus blind.
 
 ---
 
-## 10. 路线图
+## 7. Predictions written before running
 
-1. **试点：** 2 个候选人（知识型、AI 型），1 个 HR，面试方式 B，跑通一场完整面试。
-2. **补齐：** 加上结合型、表达型和业务面试官，跑全四种面试方式。
-3. **批量：** 每个组合重复跑多次，算录用率。
-4. **真人校准：** 真人盲评面试记录。
-5. **可选：** 试用期延伸；和大学版本连起来，让候选人来自不同形态的大学。
+- **A Classic:** Knowledge wins.
+- **B Open book:** AI-savvy wins, especially with HR. This is the scenario that started the study.
+- **C Open book + probing:** Both wins. AI-savvy is exposed by the follow-ups; Knowledge is slower but recovers there.
+- **D Trap task:** Knowledge and Both win. AI-savvy hands in a polished, wrong answer.
+- **Articulate and Smooth talker:** do well with HR in every format and lose that edge with the technical interviewer.
+- **Overall:** Both wins, which is no surprise. The interesting part is which single-skill candidate loses worse, and how much the two interviewers disagree.
+
+Where the simulation disagrees with these predictions is where it is most worth looking.
 
 ---
 
-## 11. 可视化网页：未来面试间
+## 8. A bias we must handle: AI favors AI
 
-网页地址：<https://claude.ai/artifact/9iyEj9ZfipFRNYMbEffmcc>（默认只有作者能打开，要给别人看需要在页面的分享菜单里设置）。源码在 [`web/index.html`](../web/index.html)。
+The interviewers are played by a language model. Research shows that language models acting as judges prefer text they or other models wrote, even when people rate the texts as equal. See Panickssery, Bowman and Feng, [LLM Evaluators Recognize and Favor Their Own Generations](https://neurips.cc/virtual/2024/oral/97998), NeurIPS 2024.
 
-**画面：** 像素风面试室。左边是候场走廊，候选人坐在长椅上，轮到谁谁就走进面试间。候选人用 AI 时，笔记本会发光，AI 工具的回答从书桌下方冒出来。每位候选人面完，两位面试官会冒出心里话和打分。全部面完后两人讨论，被录用的人走到房间中央。
+Here, that pushes AI interviewers toward the answers the AI-savvy candidate hands in, which is exactly the conclusion we want to test. Left alone, it would make the result untrustworthy.
 
-**台下视角：** 观众能看到面试官看不到的东西：候选人的真实能力值，每一步是否用了 AI、有没有发现陷阱、有没有隐瞒。
+**Countermeasures:**
 
-**两种模式：**
+- Dialogue and judgment are separate calls, and the interviewers never see the AI tool's raw output.
+- The interviewers' preferences are written into their personas instead of left to the model.
+- **Most important: human calibration.** Real recruiters blind-review simulated transcripts and pick a hire. Only if they agree with the AI interviewers is the AI interviewer trustworthy.
 
-- **Claude 生成：** 在 claude.ai 里打开时可用。台词、面试官的评价和最后的讨论都由 Claude 实时生成，用的是观看者自己的 Claude 额度，不需要 API key。
-- **演示模式：** 台词来自写好的模板，评价用固定公式，不调用 Claude。适合排练或离线演示。本地预览可以运行 `python3 web/preview.py`，再打开生成的 `web/preview.html`。
+---
 
-**机制和第 5 节一致：** 每一步做得好不好由代码根据能力值算出来，Claude 只负责把结果演成对话。面试官只看得到对话记录，看不到屏幕和能力值。台词和评价分开调用，评价时用的是另一档模型，以减轻"AI 偏爱 AI 的答案"。
+## 9. Validation
 
-**自定义：** 选角台保留了四种候选人、两位面试官、四种面试方式作为默认配置。用户可以用一句话描述，让 Claude 设计新的候选人、面试官或面试方式，再手动微调。自定义内容保存在各自的浏览器里。
+- **Human blind review:** give 10 to 20 transcripts to people with hiring experience, without telling them the candidate types.
+- **A human on stage:** you or a classmate play a candidate against the AI interviewers and compare their judgment with your own sense of how it went. This also works as a classroom demo.
 
-**重复很多次：**
+---
 
-- **Claude 批量实验：** 不播动画，连续跑很多轮。每一轮换一个随机种子，候选人也换成同类型的新面孔：名字不同，能力值上下浮动。这样统计的是"这类人"，而不只是这四个人。统计表给出每种类型的录用率、95% 置信区间，以及 HR 和业务面试官的平均分。
-- **规则估算：** 只用代码里的公式，不调用 Claude，每种面试方式各跑 200 轮。它显示的是我们的假设本身会推出什么，用来和 Claude 面试官的实际选择对照。
+## 10. Roadmap
 
-规则估算的初步结果：在默认四位候选人、默认权重下，结合型在开卷类面试里几乎总是赢；传统面试里表达型反而领先，因为 HR 的分数主要看表达。这是公式的结论，不是 Claude 面试官的结论，两者的差别本身就值得看。
+1. **Pilot:** two candidates and one HR interviewer, one complete interview. Done.
+2. **Full cast:** six candidate types, both interviewers, four formats. Done.
+3. **Batches:** repeat each combination many times and compute offer rates. Built into the web app.
+4. **Human calibration:** blind review of transcripts by real recruiters.
+5. **Later:** a probation-period extension, and a link to the university study by giving candidates different kinds of universities.
+
+---
+
+## 11. The web app: Interview Room 2030
+
+Link: <https://claude.ai/artifact/9iyEj9ZfipFRNYMbEffmcc>. It is private by default; share it from the page's Share menu. Source: [`web/index.html`](../web/index.html). Local server: [`web/server.py`](../web/server.py).
+
+**On screen.** A pixel-art interview room. Candidates wait on a bench in the hallway and walk in one at a time. When a candidate uses AI, the laptop lights up, a hologram appears above them, and the AI tool's answer pops up under the desk. After each interview, both interviewers show an inner thought and a score. At the end they argue about who to hire, and the winner walks to the middle of the room.
+
+**Backstage tab.** Shows what the interviewers cannot see: each candidate's real abilities and identity, and for each step whether they used AI, caught the trap, or hid their AI use.
+
+**Who writes the dialogue.**
+
+- **Claude:** on claude.ai, using each viewer's own Claude plan.
+- **DeepSeek:** through `web/server.py` on your computer, with your API key kept in `.env`. See the README for setup.
+- **Demo:** templates and a fixed formula, no model calls.
+
+**Casting desk.** The six candidate presets, two interviewers and four formats are the defaults. Quick picks select the original four, all six, or just Quiet builder versus Smooth talker. Any preset can be copied and edited, and a model can design a new candidate, interviewer or format from one sentence. Custom items are saved in the browser.
+
+**Hiring stats tab.**
+
+- **Spending:** the running DeepSeek cost for this session and since the last reset, editable prices, and a spending cap that stops runs and batches before they pass it.
+- **Batch experiment:** many rounds without animation. Each round uses a new seed and fresh versions of each candidate, with a new first name and abilities nudged up or down, so results describe a type of candidate rather than one person. The page shows the estimated number of calls and cost before starting.
+- **Charts:** offer rate by format with a likely-range line on each bar, and a dumbbell chart of each interviewer's average score. Results can be grouped by candidate type, by candidate card, or by identity fields such as skin tone, pronouns, education, background or first-generation status, and filtered to blind or identity-visible interviews.
+- **Formula estimate:** 100 rounds per format using only the scoring formula, to compare with what the model interviewers actually do. The formula ignores identity on purpose.
+
+**How to test for bias (an audit study).** Copy a candidate, change exactly one identity detail, select both, and run a batch with identity visible and again blind. Group the chart by candidate card. If the offer rates differ only when identity is visible, the model interviewers are reacting to identity.
+
+### First results
+
+**Formula estimate, Quiet builder versus Smooth talker, 100 rounds per format.** The answer depends entirely on the format:
+
+| Format | Quiet builder | Smooth talker |
+|---|---|---|
+| A Classic | 0% | 58% |
+| B Open book | 67% | 14% |
+| C Open book + probing | 0% | 0% |
+| D Trap task | 0% | 7% |
+
+In the classic format the talker wins because HR scores mostly reward speaking. Once a real task with AI is allowed, the builder wins. Add probing or a trap and neither clears the bar. This is what our formula implies, not what a model interviewer decides.
+
+**Two real DeepSeek rounds, open book, same pair.** In the first round the technical interviewer refused both candidates and nobody was hired. In the second, both interviewers scored the Smooth talker higher, yet after discussion they hired the Quiet builder because the builder checked the data before trusting it. Two rounds prove nothing statistically, but they show why the discussion step matters: the decision does not simply follow the scores.

@@ -1,134 +1,134 @@
-# 研究版本二：AI 时代的职场新人
+# Study 2: Early-career workers in the age of AI (paused)
 
-研究对象：刚工作 0 到 3 年的人，大约 22 到 26 岁，以及带他们的老员工和管他们的经理。
+Who: people in their first 0 to 3 years of work, roughly 22 to 26 years old, plus the senior staff who mentor them and the managers who supervise them.
 
-通用的方法原则和风险见 [README](../README.md)。
-
----
-
-## 1. 为什么值得做
-
-- **冲击已经发生，而且有数据。** 斯坦福数字经济实验室用美国 ADP 工资数据发现：在受 AI 影响最大的职业里，22 到 25 岁新人的就业相对下降了 16%（2025 年 11 月版），同一职业里更有经验的员工却保持稳定甚至增长。调整主要体现在招人数量上，而不是工资上，而且集中在 AI 替代人、而不是辅助人的职业。见 [Canaries in the Coal Mine?](https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine)。作者对因果关系很谨慎，这是"与 AI 冲击相符的证据"，不是证明。
-- **它正好落在人和人之间的互动上。** 新人以前靠做简单活学本事，老员工在帮新人改活的过程中把经验传下去。AI 接走简单活以后，这条师徒链会不会断，是一个关于关系的问题。
-- **它和大学直接相连。** 大学该教什么，要看新人在职场上缺什么。[版本一](university.md)里的大学毕业生，就是这里的新人。
+This study is paused because it mostly takes the employer's point of view. Shared method and risks are in the [README](../README.md).
 
 ---
 
-## 2. 核心问题
+## 1. Why it is worth doing
 
-> 当 AI 能做新人的活，新人还怎么成长为老手？老员工还愿不愿意带新人？
-
-背后有一个悖论：今天的新人就是十年后的资深员工。公司为了眼前的效率少招新人、少带新人，十年后可能没有资深员工可用。
-
----
-
-## 3. 场景
-
-一家中型公司的软件团队。
-
-选软件开发有两个原因：它在真实数据里受冲击最明显；任务具体，代码可以给任务打分。以后可以换成客服、咨询、法律助理等职业做对比，尤其值得对比"AI 替代型"和"AI 辅助型"职业。
+- **The shock has already happened, and there is data.** Using ADP payroll data, the Stanford Digital Economy Lab found that in the occupations most exposed to AI, employment of 22- to 25-year-olds fell 16% in relative terms (November 2025 version), while more experienced workers in the same occupations held steady or grew. The adjustment showed up in headcount rather than pay, and it was concentrated where AI replaces rather than assists people. See [Canaries in the Coal Mine?](https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine). The authors are careful about causation: this is evidence consistent with an AI effect, not proof.
+- **It is about how people interact.** Newcomers used to learn by doing simple work, and senior staff passed on their experience while fixing that work. Once AI takes the simple work, whether this mentoring chain breaks is a question about relationships.
+- **It connects directly to universities.** What universities should teach depends on what newcomers lack at work. The graduates of [Study 1](university.md) are the newcomers here.
 
 ---
 
-## 4. 时间设定：两层
+## 2. Core question
 
-| 层 | 用什么 | 跑多久 | 回答什么 |
+> Once AI can do a newcomer's work, how do newcomers grow into experts? Are senior staff still willing to train them?
+
+There is a paradox behind it: today's newcomers are the senior staff of ten years from now. If companies hire and train fewer juniors for short-term efficiency, they may have no seniors in ten years.
+
+---
+
+## 3. Setting
+
+A software team at a mid-sized company.
+
+Software development was chosen for two reasons: it shows the clearest shock in the real data, and its tasks are concrete enough for code to score. Later the setting can switch to customer service, consulting or legal assistance for comparison, especially between jobs where AI replaces people and jobs where it assists them.
+
+---
+
+## 4. Time: two layers
+
+| Layer | Built with | Runs for | Answers |
 |---|---|---|---|
-| **第一层：智能体模拟** | 大模型智能体 | 新人入职后第一年，每两周一步 | 新人每天怎么工作、跟谁学、和谁来往，一年后长成什么样 |
-| **第二层：人才流动推演** | 纯代码的简单数学模型，不用大模型 | 往后推十年 | 按第一层得到的招聘量和成长速度，十年后还有多少合格的资深员工 |
+| **Layer 1: agent simulation** | Language-model agents | The newcomer's first year, in two-week steps | How newcomers work day to day, whom they learn from, whom they spend time with, and where they are after a year |
+| **Layer 2: talent-flow projection** | A simple model in code, no language model | Ten years ahead | Given the hiring and growth rates from layer 1, how many qualified senior staff exist in ten years |
 
-**为什么分两层：** 智能体跑一年已经接近它保持人设稳定的极限，但"资深断层"要十年才会显现。所以短期行为交给智能体，长期累积交给数学。数学模型的参数来自智能体模拟，假设全部透明。
+**Why two layers:** one year is about as long as agents keep their personas stable, but a shortage of seniors takes ten years to show. Short-term behavior goes to the agents; long-term accumulation goes to math, with parameters taken from the agent runs so every assumption is visible.
 
-**设定年份：** 2030 年入职的新人，也就是 2026 年秋天入学的那届大学生。
-
----
-
-## 5. 机制层：真实能力和表面产出
-
-这是新人版本里最关键的设计。
-
-- **真实能力。** 每个新人有一个隐藏的能力值，由代码计算，不由模型决定。
-- **表面产出。** 经理看到的是表面产出，里面包括 AI 帮忙做出来的部分。
-- **能力怎么涨。** 真实能力只在三种情况下增长：亲手解决有难度的问题；得到老员工的反馈；认真检查并弄懂 AI 的输出。直接照搬 AI 的结果，表面产出上去了，真实能力几乎不涨。
-- **事故。** 每隔一段时间发生一次事故，比如一个 AI 解决不了的线上故障。事故只看真实能力，它会暴露"看起来很能干、其实不会"的新人。
-
-**为什么必须这样做：** 大模型本身什么都会。让它扮演新人，它会表现得太能干。所以"会不会"必须是代码里的数字，任务成败由代码根据这个数字判定。模型只负责决定怎么做、找谁、说什么。
+**Year:** newcomers who start work in 2030, the students who entered university in fall 2026.
 
 ---
 
-## 6. 实验一：回测 2023 到 2025 年
+## 5. Mechanism: real ability versus visible output
 
-**世界：** 2022 年底的一个软件团队，AI 编程工具刚出现。经理智能体在预算和业绩压力下，自己决定每年招多少人、招什么级别。模拟到 2025 年。
+This is the key design choice of this study.
 
-**对照真实数据：**
+- **Real ability.** Each newcomer has a hidden ability score, computed by code rather than decided by the model.
+- **Visible output.** The manager sees output, including the parts AI produced.
+- **How ability grows.** Real ability grows only in three ways: solving hard problems by hand, getting feedback from senior staff, and carefully checking and understanding AI output. Copying AI output raises visible output but barely moves real ability.
+- **Incidents.** Every so often something breaks that AI cannot fix. Incidents test real ability only, and they expose newcomers who look capable but are not.
 
-- 新人招聘相对减少，资深员工不减。
-- 调整体现在人数上，而不是工资上。
-
-**注意：** 模型可能读过这篇论文，所以回测通过只算及格线。更有价值的是看它给出的理由是否合理，比如经理为什么觉得"不招新人也行"。
-
----
-
-## 7. 实验二：2030 年新人的第一年
-
-**共享的世界规则：**
-
-- AI 能完成大部分常规开发任务，但会犯需要经验才能发现的错误。
-- 公司有业绩压力和人力预算。
-- 雇一个新人比用 AI 贵。
-
-**三种公司策略**（其他全部相同：同一批人设、同一组随机种子）：
-
-- **A 精简替代：** 少招新人，AI 接手新人原来的活。留下的新人主要负责检查 AI 的输出。
-- **B 学徒制：** 照常招新人。老员工带新人计入绩效。新人可以用 AI，但在代码评审里要讲清楚为什么这样写。
-- **C 放任自学：** 照常招新人，没有带教安排，新人主要跟 AI 学。这最接近很多公司现在的默认状态。
-
-**人物（约 12 个）：**
-
-- **新人 6 人。** 在这几个维度上拉开差异：名校还是普通学校；外向还是内向；遇到问题主动问人还是不好意思问；对 AI 的依赖程度；经济压力大小。还可以加一个维度：来自版本一里的哪种大学。
-- **老员工 4 人。** 有人爱带人，有人嫌麻烦；有人时间紧；有人担心自己也会被 AI 替代。最后这一点会影响他们愿不愿意把本事教出去。
-- **经理 1 人。** 管预算和业绩，决定转正、晋升和裁员。
-- **招聘官 1 人。** 负责招聘环节。
-
-**观测指标：**
-
-- **成长：** 一年后每个新人的真实能力，以及真实能力和表面产出之间的差距。
-- **带教：** 老员工花在带人上的时间；谁得到了带教，谁没有。
-- **关系：** 新人和老员工、新人和新人之间的来往密度；新人的归属感和孤独感，每两周自评一次。
-- **结果：** 转正、晋升、离职、被裁，以及这些结果和新人初始条件的关系。
-- **长期：** 第二层推演里，十年后合格资深员工的数量。
+**Why this is necessary:** a language model knows everything. Asked to play a newcomer, it acts too capable. So "can they do it" has to be a number in code, and code decides whether a task succeeds. The model only decides how to approach it, whom to ask and what to say.
 
 ---
 
-## 8. 跑之前写下的预期
+## 6. Experiment 1: replay 2023 to 2025
 
-- **A 精简替代：** 第一年产出最高。留下的新人变成"AI 检查员"，真实能力涨得慢，因为没人教他们怎么判断 AI 错在哪。十年推演里出现资深断层。
-- **B 学徒制：** 第一年产出最低，新人成长最快。但带教能不能持续，取决于它是否真的计入绩效。担心被替代的老员工会"留一手"。
-- **C 放任自学：** 新人表面产出不错，真实能力最差，直到事故才暴露。主动、外向、敢问人的新人会拉开差距，其他人越来越依赖 AI，也越来越孤立。
-- **共同预期：** 老员工的带教时间会变成最稀缺的资源。谁能拿到它，决定谁能成长。
+**World:** a software team at the end of 2022, when AI coding tools appear. Under budget and performance pressure, the manager agent decides each year how many people to hire and at what level. The simulation runs to 2025.
 
-模拟结果和这些预期不一样的地方，才是最值得看的地方。
+**Compare with the real data:**
 
----
+- Junior hiring falls relative to senior hiring, and senior staff are not cut.
+- The adjustment shows up in headcount, not pay.
 
-## 9. 人设从哪来
-
-职场新人很容易找到，这是这个版本的一大优势。可以访谈 10 到 20 位刚工作一两年的人，用访谈记录生成智能体。斯坦福团队 2024 年的研究《Generative Agent Simulations of 1,000 People》用这种方法造了 1000 个智能体，复现真人问卷答案的准确度接近真人自己两周后重答的水平。
-
-访谈时重点问：
-
-- 第一年跟谁学到的最多？
-- 遇到不会的问题，先问人还是先问 AI？
-- 有没有"看起来做完了、其实没懂"的时候？后来怎么发现的？
-- 带你的人为什么愿意带你，或者为什么不愿意？
+**Caution:** the model may have read this paper, so passing the replay is a minimum bar. More valuable is whether its reasons are plausible, for example why the manager concludes "we don't need juniors."
 
 ---
 
-## 10. 路线图
+## 7. Experiment 2: the first year of 2030 newcomers
 
-1. **试点：** 6 个新人、2 个老员工、1 个经理，跑一个月，只用条件 C，把机制层跑通。
-2. **访谈：** 用真人访谈替换合成人设。
-3. **回测：** 实验一。
-4. **正式实验：** 实验二，三种策略，每种跑多个随机种子。
-5. **十年推演：** 用实验二的结果做第二层。
-6. **和大学版本连起来：** 把新人的来源大学作为变量，看哪种大学出来的人在职场上成长得好。
+**Shared world rules:**
+
+- AI can complete most routine development tasks but makes mistakes that only experience can catch.
+- The company has performance pressure and a headcount budget.
+- A newcomer costs more than AI.
+
+**Three company policies** (everything else identical: same personas, same seeds):
+
+- **A Lean replacement:** hire fewer newcomers and let AI take their work. The remaining newcomers mainly check AI output.
+- **B Apprenticeship:** hire as usual. Mentoring counts in senior staff's performance reviews. Newcomers may use AI but must explain their choices in code review.
+- **C Learn on your own:** hire as usual with no mentoring program; newcomers mostly learn from AI. This is closest to what many companies do by default.
+
+**Cast (about 12):**
+
+- **6 newcomers**, varied by: elite or ordinary school; outgoing or shy; asks for help or doesn't; how much they lean on AI; financial pressure. Optionally, which kind of university from Study 1 they come from.
+- **4 senior staff:** some like mentoring, some find it a chore; some are short on time; some worry AI will replace them too, which affects how much they teach.
+- **1 manager**, who owns the budget and decides on confirmations, promotions and layoffs.
+- **1 recruiter**, who handles hiring.
+
+**Measures:**
+
+- **Growth:** each newcomer's real ability after a year, and the gap between real ability and visible output.
+- **Mentoring:** time senior staff spend teaching; who gets mentored and who doesn't.
+- **Relationships:** how often newcomers interact with senior staff and with each other; belonging and loneliness, self-reported every two weeks.
+- **Outcomes:** confirmation, promotion, leaving or being let go, and how these relate to newcomers' starting points.
+- **Long term:** in the layer-2 projection, the number of qualified senior staff in ten years.
+
+---
+
+## 8. Predictions written before running
+
+- **A Lean replacement:** the highest output in year one. The remaining newcomers become "AI checkers" whose real ability grows slowly, because nobody teaches them how to tell where AI is wrong. The ten-year projection shows a shortage of seniors.
+- **B Apprenticeship:** the lowest output in year one and the fastest growth. Whether mentoring lasts depends on whether it truly counts in reviews. Senior staff who fear replacement hold back.
+- **C Learn on your own:** decent visible output, the weakest real ability, exposed only by incidents. Proactive, outgoing newcomers who ask people for help pull ahead; the rest lean on AI and grow isolated.
+- **Overall:** senior staff's mentoring time becomes the scarcest resource. Whoever gets it grows.
+
+Where the simulation disagrees with these predictions is where it is most worth looking.
+
+---
+
+## 9. Where personas come from
+
+Early-career people are easy to find, which is a strength of this study. Interview 10 to 20 people who started work in the last year or two and build agents from the transcripts. A 2024 Stanford study, "Generative Agent Simulations of 1,000 People," built 1,000 agents this way, and they reproduced their human counterparts' survey answers nearly as well as the people themselves did when re-surveyed two weeks later.
+
+Questions to ask in interviews:
+
+- Who did you learn the most from in your first year?
+- When you didn't know something, did you ask a person or AI first?
+- Was there a time you "finished" something without really understanding it? How did you find out?
+- Why was the person who mentored you willing to do it, or why not?
+
+---
+
+## 10. Roadmap
+
+1. **Pilot:** 6 newcomers, 2 senior staff, 1 manager, one month, condition C only, to get the mechanism working.
+2. **Interviews:** replace synthetic personas with ones built from real interviews.
+3. **Replay:** Experiment 1.
+4. **Main experiment:** Experiment 2, three policies, several seeds each.
+5. **Ten-year projection:** layer 2, using the results of Experiment 2.
+6. **Connect to the university study:** use the newcomer's university as a variable and see which kind of university produces people who grow well at work.

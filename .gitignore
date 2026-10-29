@@ -1,2 +1,4 @@
 web/preview.html
 __pycache__/
+.env
+web/.env
